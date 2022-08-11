@@ -1,0 +1,146 @@
+﻿@model IEnumerable<MedicalApp.Models.Usuarios.Usuario>
+
+@{
+    ViewBag.Title = "Listado de Usuarios: " + ViewBag.Grupo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<MedicalApp.Models.Usuarios.GrupoUsuario> grupoUsuarios = ViewBag.ListGroup as List<MedicalApp.Models.Usuarios.GrupoUsuario>;
+    
+}
+
+<div class="panel panel-container ">
+    <button type="button" class="btn btn-primary btn-sm" title="Agregar Nuevo Usuario"
+            style="float: right; margin-top: -15px; margin-right: 5px; padding: 5px 15px 5px 10px;"
+            onclick="location.href='@Url.Action("Create", "Usuario")'">
+        <span class="fa fa-plus">&nbsp;</span> Agregar Nuevo Usuario
+    </button>
+    <button type="button" class="btn btn-info btn-sm" title="Filtrar Listado" data-toggle="modal" data-target="#modalFilter"
+            style="float: right; margin-top: -15px; margin-right: 5px; padding: 5px 15px 5px 10px;">
+        <span class="fa fa-search">&nbsp;</span> Filtrar Listado
+    </button>
+    <hr />
+    <table class="table-responsive table-hover table-striped display" width="100%" cellspacing="1">
+        <thead>
+            <tr>
+                <th>
+                    Cod. Usuario
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Apellido)
+                </th>
+                <th>
+                    Nivel de Acceso
+                </th>
+                <th>
+                    Especialidad
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Correo)
+                </th>
+                <th>
+                    Teléfono
+                </th>
+                <th>
+                   Estado
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                foreach (var term in Model)
+                {
+                    <tr style="@(term.Eliminado == true ? "background-color:#FAE6E9" : "")">
+                        <td>@Html.DisplayFor(modelItem => term.UsuarioId)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Nombre)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Apellido)</td>
+                        <td>@Html.DisplayFor(modelItem => term._GrupoUsuario.Descripcion)</td>
+                        <td>@Html.DisplayFor(modelItem => term._AreaEspecialidad.Descripcion)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Correo)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Telefono)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Estado)</td>
+                        <td align="right">
+
+                            @if (!term.Eliminado)
+                            {
+                                if (term.GrupoUsuarioId == 4)
+                                {
+                                    <button type="button" class="btn btn-dark btn-sm" title="Asignar Asistente" onclick="location.href='@Url.Action("Index", "UsuarioAsociado", new { id = term.Id }) '">
+                                        <span class="fa fa-group">&nbsp;</span>
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-sm" title="Asignar Horario" onclick="location.href='@Url.Action("Index", "UsuarioHorario", new { UsuarioId = term.Id }) '">
+                                        <span class="fa fa-calendar">&nbsp;</span>
+                                    </button>
+                                }
+                                <button type="button" class="btn btn-info btn-sm" title="Modificar" onclick="location.href='@Url.Action("Edit", "Usuario", new { id = term.Id }) '">
+                                    <span class="fa fa-pencil">&nbsp;</span>
+                                </button>
+
+                                <button type="button" class="btn btn-warning btn-sm" title="Reiniciar Contraseña" onclick="if(confirm('¿Seguro que desea colocar la contraseña por defecto?')) location.href='@Url.Action("ResetPassword", "UsuarioContrasena", new { id = term.Id }) '">
+                                    <span class="fa fa-lock">&nbsp;</span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick="location.href='@Url.Action("Delete", "Usuario", new { id = term.Id }) '">
+                                    <span class="fa fa-eraser">&nbsp;</span>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="modalFilter" tabindex="-1" role="dialog" aria-labelledby="modalFilterLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 500px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title" id="modalFilterLabel">Seleccionar Filtro</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row cont-filtros">
+                    <div class="table-responsive tabla-disponible">
+
+                        <table class="table display" id="dataTable" width="100%" cellspacing="0"
+                               data-order='[[ 0, "asc" ]]' data-page-length='5'>
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Grupo de Usuario</th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (grupoUsuarios.Count > 0)
+                                {
+                                    foreach (var term in grupoUsuarios)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(IndexModel => term.Id)</td>
+                                            <td>@Html.DisplayFor(IndexModel => term.Descripcion)</td>
+                                            <td>
+                                                <button value='@term.Id' type="submit" name="CustomerSelected"  onclick="location.href='@Url.Action("Filter", "Usuario", new { groupId = term.Id }) '" )'"
+                                                        class="btn btn-sm btn-outline-dark shadow-sm">
+                                                    Seleccionar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

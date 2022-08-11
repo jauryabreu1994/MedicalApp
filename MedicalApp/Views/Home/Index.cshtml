@@ -1,0 +1,608 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Hospital Dr. Luis Morillo King </title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="76x76" href="~/Content/img/medical-icon.png">
+    <link rel="icon" type="image/png" href="~/Content/img/medical-icon.png">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/Content/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="~/Content/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="~/Content/assets/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: Medilab - v4.7.1
+    * Template URL: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+</head>
+
+<body>
+
+    <!-- ======= Top Bar ======= -->
+    <div id="topbar" class="d-flex align-items-center fixed-top">
+        <div class="container d-flex justify-content-between">
+            <div class="contact-info d-flex align-items-center">
+                <i class="bi bi-envelope"></i> <a href="mailto:hospitalmorilloking@gmail.com">hospitalmorilloking@gmail.com</a>
+                <i class="bi bi-phone"></i> +1 809 573 3636
+            </div>
+            <div class="d-none d-lg-flex social-links align-items-center">
+                <a href="https://twitter.com/morillokinghosp" class="twitter"><i class="bi bi-twitter"></i></a>
+                <a href="https://es-la.facebook.com/hospmorilloking/" class="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="https://www.instagram.com/hospmorilloking" class="instagram"><i class="bi bi-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center">
+
+            <h1 class="logo me-auto"><a href="index.html">Hospital Luis Morillo King</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="#hero">Inicio</a></li>
+                    <li><a class="nav-link scrollto" href="#about">Sobre Nosotros</a></li>
+                    <li><a class="nav-link scrollto" href="#services">Servicios</a></li>
+                    <li><a class="nav-link scrollto" href="#departments">Departamentos</a></li>
+                    <li><a class="nav-link scrollto" href="#doctors">Doctores</a></li>
+                    <li><a class="nav-link scrollto" href="#contact">Contactos</a></li>
+                </ul>
+            </nav><!-- .navbar -->
+
+            <a href="@Url.Action("Login", "Paciente")" class="appointment-btn">Pacientes</a>
+            <a href="@Url.Action("Index", "Login")" class="appointment-btn">Empleados</a>
+
+        </div>
+    </header><!-- End Header -->
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex align-items-center ">
+        <div class="container">
+            <h1>Bienvenidos</h1>
+            <h2>Hospital Regional Universitario Luis Morillo King</h2>
+            <a href="#about" class="btn-get-started scrollto">Empecemos</a>
+        </div>
+    </section><!-- End Hero -->
+
+    <main id="main">
+
+        <!-- ======= Why Us Section ======= -->
+        <section id="why-us" class="why-us ">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-lg-4 d-flex align-items-stretch">
+                        <div class="content">
+                            <h3>¿Porqué elegir el Hospital?</h3>
+                            <p>
+                                Es un hospital de tercer 3er. nivel de atención, es el centro de referencia de la Red de Servicios de Salud Cibao Central (SRS VIII). Este hospital recibe usuarios desde los hospitales provinciales: Pedro E. Marchena de la Provincia Monseñor Nouel e Inmaculada Concepción de la Provincia Sánchez Ramírez. Se desarrolla la residencia de Medicina Familiar y el internado rotatorio de la escuela de medicina de la Universidad Católica Tecnológica UCATECI.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 d-flex align-items-stretch">
+                        <div class="icon-boxes d-flex flex-column justify-content-center">
+                            <div class="row">
+                                <div class="col-xl-4 d-flex align-items-stretch">
+                                    <div class="icon-box mt-4 mt-xl-0">
+                                        <i class="bx bx-receipt"></i>
+                                        <h4>Misión</h4>
+                                        <p>Somos una institución de salud, de carácter público que ofrece servicios especializados de consulta y hospitalización a la población de la provincia y de la región.</p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 d-flex align-items-stretch">
+                                    <div class="icon-box mt-4 mt-xl-0">
+                                        <i class="bx bx-cube-alt"></i>
+                                        <h4>Visión</h4>
+                                        <p>Ser un centro de excelencia para la atención médica que responda con oportunidad, calidez, eficacia y recursos tecnológicos a las necesidades de salud de los usuarios.</p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 d-flex align-items-stretch">
+                                    <div class="icon-box mt-4 mt-xl-0">
+                                        <i class="bx bx-images"></i>
+                                        <h4>Valores</h4>
+                                        <p style="text-align: left">
+
+                                            <li>Disposición de Cambio</li>
+                                            <li>Equidad en el Servicio</li>
+                                            <li>Trabajo en Equipo</li>
+                                            <li>Mejoramiento Continuo</li>
+                                            <li>Eficiencia de la Atención</li>
+                                            <li>Seguridad del Paciente</li>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- End .content-->
+                    </div>
+                </div>
+
+            </div>
+        </section><!-- End Why Us Section -->
+        <!-- ======= About Section ======= -->
+        <section id="about" class="about ">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch position-relative">
+                    </div>
+
+                    <div class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
+                        <h3>Historia</h3>
+                        <p style="text-align: justify">
+                            El Hospital Dr. Luis Morillo King está ubicado en la Calle García Godoy #3 de la Ciudad de La Vega, siendo sus límites, al norte Country Club, al sur Centro de Enseñanza Don Pepe Álvarez, al este Familia y al Oeste Centro Rehabilitación. Fue reinaugurado el 17 de Julio del año 1959, por motivo de la renovación del 14 de junio de esa misma fecha, desde su fundación estuvo abierta a una gran población estimada en ese entonces en 149, 138 habitantes, distribuidos en la provincia de La Vega y otras ciudades aledañas.<br /><br />
+
+                            El hospital ofrecía servicios básicos asistenciales en el área de medicina general, Ginecología y Obstetricia, cirugía, pediatría, consulta externa, con un personal limitado en número y especialidades, ya que solo 8 médicos laboraban en esos servicios. Al año aumentaron a 10 médicos y enfermera auxiliares a 36, la primera enfermera graduada fue la Lic. Brache.<br /><br />
+
+                            Su capacidad de internamiento desde su inicio era de 200 camas hospitalarias, siendo su primer Director Dr. Luis Morillo King y el Sub-Director el Dr. Hernán Franco con los médicos internos el Dr. Concepción y el Dr. Diego Fuerte y otros 2 más siendo 4 en total, con una súper intendentes (así le llamaba a la directora de enfermería) llamada doña Inés, al mes vinieron 6 monjas de la congregación de San Vicente de Paul, al principio habían 8 auxiliares de enfermería para cubrir 40 camas distribuidas, 40 camas en maternidad, 40 en pediatrías, 40 en mujeres, 40 en hombres, 8 en aislamiento y el resto en aislamiento.<br /><br />
+
+                            El coche era el medio de transporte, los pacientes venían en literas de acuerdo al caso, venían cubierto, los heridos con paño rojos y los demás con paños blancos. Con el tiempo fue incrementado su personal, así como equipos, servicios y programas.<br /><br />
+
+                            En 1981 se dio inicio a las secciones diarias de entrega de turnos, donde participaba la mayor parte del personal médico, a fin de evaluar la calidad de los servicios, semanalmente se ofrecía una sesión científica, para presentar y discutir las cosas desde 1979 y a partir del 1983, se ofrecieron conferencias sobre tópicos importantes relacionados con la salud.
+                        </p>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </section><!-- End About Section -->
+        <!-- ======= Counts Section ======= -->
+        <section id="counts" class="counts">
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="count-box">
+                            <i class="fas fa-user-md"></i>
+                            <span data-purecounter-start="0" data-purecounter-end="210" data-purecounter-duration="3" class="purecounter"></span>
+                            <p>Doctores</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
+                        <div class="count-box">
+                            <i class="far fa-hospital"></i>
+                            <span data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="3" class="purecounter"></span>
+                            <p>Departamentos</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+                        <div class="count-box">
+                            <i class="fas fa-flask"></i>
+                            <span data-purecounter-start="0" data-purecounter-end="6" data-purecounter-duration="3" class="purecounter"></span>
+                            <p>Laboratorios</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+                        <div class="count-box">
+                            <i class="fas fa-award"></i>
+                            <span data-purecounter-start="0" data-purecounter-end="8" data-purecounter-duration="3" class="purecounter"></span>
+                            <p>Premios</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- End Counts Section -->
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>Servicios</h2>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+                        <div class="icon-box">
+                            <div class="icon"><i class="fas fa-heartbeat"></i></div>
+                            <h4><a href="#">Cardiología</a></h4>
+                            <p>Servicio diagnóstico y tratamiento de las enfermedades del corazón y los vasos sanguíneos.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+                        <div class="icon-box">
+                            <div class="icon"><i class="fas fa-pills"></i></div>
+                            <h4><a href="#">Medicina Interna</a></h4>
+                            <p>Destinado a la atención de pacientes con patologías clínicas de consulta externa e internamientos.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
+                        <div class="icon-box">
+                            <div class="icon"><i class="fas fa-hospital-user"></i></div>
+                            <h4><a href="#">Hospitalización</a></h4>
+                            <p>Mediante este servicio se ingresan los usuarios evaluados en consulta externa y/o emergencia.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
+                        <div class="icon-box">
+                            <div class="icon"><i class="fas fa-syringe"></i></div>
+                            <h4><a href="#">Anestesiología</a></h4>
+                            <p>Servicio de anestesia general, consulta preanestésica y visita preanestésica, entre otros.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
+                        <div class="icon-box">
+                            <div class="icon"><i class="fas fa-tooth"></i></div>
+                            <h4><a href="#">Odontología</a></h4>
+                            <p>Servicio especializad basado en la prevención, diagnóstico, y rehabilitación de la salud oral.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
+                        <div class="icon-box">
+                            <div class="icon"><i class="fas fa-notes-medical"></i></div>
+                            <h4><a href="#">Exámenes de Laboratorio</a></h4>
+                            <p>Procedimiento mediante el cual un usuario puede confirmar o descartar un diagnóstico.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- End Services Section -->
+        <!-- ======= Departments Section ======= -->
+        <section id="departments" class="departments  section-bg">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>Departamentos</h2>
+                </div>
+
+                <div class="row gy-4">
+                    <div class="col-lg-3">
+                        <ul class="nav nav-tabs flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active show" data-bs-toggle="tab" href="#tab-1">Cardiología</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#tab-2">Anestesiología</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#tab-3">Odontología</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#tab-4">Pediatría</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#tab-5">Oftalmología</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="tab-content">
+                            <div class="tab-pane active show" id="tab-1">
+                                <div class="row gy-4">
+                                    <div class="col-lg-8 details order-2 order-lg-1">
+                                        <h3>Cardiología </h3>
+                                        <p class="fst-italic">Parte de la medicina que se ocupa de la anatomía, la fisiología y las enfermedades del corazón.</p>
+                                        <p>Es la rama de la medicina que se encarga del estudio, diagnóstico y tratamiento de las enfermedades del corazón y del sistema circulatorio. Es médica, pero no quirúrgica; los especialistas en el abordaje quirúrgico del corazón son el cirujano cardiaco o el cirujano cardiovascular.</p>
+                                    </div>
+                                    <div class="col-lg-4 text-center order-1 order-lg-2">
+                                        <img src="~/Content/assets/img/departments-1.jpg" alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab-2">
+                                <div class="row gy-4">
+                                    <div class="col-lg-8 details order-2 order-lg-1">
+                                        <h3>Anestesiología</h3>
+                                        <p class="fst-italic">Parte de la medicina que se ocupa de los aspectos farmacológicos, fisiológicos y clínicos de la anestesia.</p>
+                                        <p>Es la especialidad médica dedicada a la atención y cuidados especiales e intensivos de los pacientes durante las intervenciones quirúrgicas u otros procesos que puedan resultar molestos o dolorosos. Asimismo, tiene a su cargo el tratamiento del dolor agudo o crónico de causa extraquirúrgica.</p>
+                                    </div>
+                                    <div class="col-lg-4 text-center order-1 order-lg-2">
+                                        <img src="~/Content/assets/img/departments-2.jpg" alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab-3">
+                                <div class="row gy-4">
+                                    <div class="col-lg-8 details order-2 order-lg-1">
+                                        <h3>Odontología</h3>
+                                        <p class="fst-italic">Parte de la medicina que se ocupa de la dentadura y sus enfermedades.</p>
+                                        <p>Es una de las ciencias de la salud que se encarga del diagnóstico, tratamiento y prevención de las enfermedades del aparato estomatognático, el cual incluye además de los dientes, las encías, el tejido periodontal, el maxilar superior, el maxilar inferior y la articulación temporomandibular.</p>
+                                    </div>
+                                    <div class="col-lg-4 text-center order-1 order-lg-2">
+                                        <img src="~/Content/assets/img/departments-3.jpg" alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab-4">
+                                <div class="row gy-4">
+                                    <div class="col-lg-8 details order-2 order-lg-1">
+                                        <h3>Pediatria</h3>
+                                        <p class="fst-italic">Parte de la medicina que se ocupa del estudio del crecimiento y el desarrollo de los niños hasta la adolescencia, así como del tratamiento de sus enfermedades.</p>
+                                        <p>Es la especialidad médica y es la rama de la medicina que involucra la atención médica de bebés, niños y adolescentes</p>
+                                    </div>
+                                    <div class="col-lg-4 text-center order-1 order-lg-2">
+                                        <img src="~/Content/assets/img/departments-4.jpg" alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab-5">
+                                <div class="row gy-4">
+                                    <div class="col-lg-8 details order-2 order-lg-1">
+                                        <h3>Ofaltmologia</h3>
+                                        <p class="fst-italic">Parte de la medicina que estudia el ojo y se ocupa de sus enfermedades.</p>
+                                        <p>Es la especialidad médica que estudia las enfermedades de ojo y su tratamiento, incluyendo el globo ocular, su musculatura, el sistema lagrimal y los párpados. Las personas dedicadas a la oftalmología se llaman oftalmólogos u oculistas.</p>
+                                    </div>
+                                    <div class="col-lg-4 text-center order-1 order-lg-2">
+                                        <img src="~/Content/assets/img/departments-5.jpg" alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section><!-- End Departments Section -->
+        <!-- ======= Doctors Section ======= -->
+        <section id="doctors" class="doctors ">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>Doctores</h2>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="member d-flex align-items-start">
+                            <div class="pic"><img src="~/Content/assets/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
+                            <div class="member-info">
+                                <h4>Walter White</h4>
+                                <span>Director del Hospital</span>
+                                <p>Desde el 2018 en funciones, aplicando las mejores tecnologias para la institución.</p>
+                                <div class="social">
+                                    <a href=""><i class="ri-twitter-fill"></i></a>
+                                    <a href=""><i class="ri-facebook-fill"></i></a>
+                                    <a href=""><i class="ri-instagram-fill"></i></a>
+                                    <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mt-4 mt-lg-0">
+                        <div class="member d-flex align-items-start">
+                            <div class="pic"><img src="~/Content/assets/img/doctors/doctors-2.jpg" class="img-fluid" alt=""></div>
+                            <div class="member-info">
+                                <h4>Jennifer Reyes</h4>
+                                <span>Anestesióloga</span>
+                                <p>Con +15 a&ntilde;os de experiencia y +1500 pacientes.</p>
+                                <div class="social">
+                                    <a href=""><i class="ri-twitter-fill"></i></a>
+                                    <a href=""><i class="ri-facebook-fill"></i></a>
+                                    <a href=""><i class="ri-instagram-fill"></i></a>
+                                    <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mt-4">
+                        <div class="member d-flex align-items-start">
+                            <div class="pic"><img src="~/Content/assets/img/doctors/doctors-3.jpg" class="img-fluid" alt=""></div>
+                            <div class="member-info">
+                                <h4>Pedro Rivas</h4>
+                                <span>Odontologo</span>
+                                <p>Con +8 a&ntilde;os de experiencia y +10 pacientes al dia.</p>
+                                <div class="social">
+                                    <a href=""><i class="ri-twitter-fill"></i></a>
+                                    <a href=""><i class="ri-facebook-fill"></i></a>
+                                    <a href=""><i class="ri-instagram-fill"></i></a>
+                                    <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mt-4">
+                        <div class="member d-flex align-items-start">
+                            <div class="pic"><img src="~/Content/assets/img/doctors/doctors-4.jpg" class="img-fluid" alt=""></div>
+                            <div class="member-info">
+                                <h4>Sabrina Gomez</h4>
+                                <span>Neurocirujana</span>
+                                <p>Con +12 a&ntilde;os de experiencia y +80 operaciones.</p>
+                                <div class="social">
+                                    <a href=""><i class="ri-twitter-fill"></i></a>
+                                    <a href=""><i class="ri-facebook-fill"></i></a>
+                                    <a href=""><i class="ri-instagram-fill"></i></a>
+                                    <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- End Doctors Section -->
+        <!-- ======= Contact Section ======= -->
+        <section id="contact" class="contact">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>Contactos</h2>
+                </div>
+            </div>
+
+            <div>
+                <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10656.081194811191!2d-70.5201600715963!3d19.217306593413028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eb02b7c928cd4b5%3A0xbab13414627d6012!2sHospital%20Regional%20Universitario%20Dr.%20Luis%20Manuel%20Morillo%20King!5e0!3m2!1ses-419!2sdo!4v1650761083690!5m2!1ses-419!2sdo" frameborder="0" allowfullscreen></iframe>
+            </div>
+
+            <div class="container">
+                <div class="row mt-5">
+
+                    <div class="col-lg-4">
+                        <div class="info">
+                            <div class="address">
+                                <i class="bi bi-geo-alt"></i>
+                                <h4>Ubicacion:</h4>
+                                <p>Av. García Godoy 214, La Vega 41000</p>
+                            </div>
+
+                            <div class="email">
+                                <i class="bi bi-envelope"></i>
+                                <h4>Correo:</h4>
+                                <p>hospitalmorilloking@gmail.com</p>
+                            </div>
+
+                            <div class="phone">
+                                <i class="bi bi-phone"></i>
+                                <h4>Teléfono:</h4>
+                                <p>+1 809 573 3636</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-8 mt-5 mt-lg-0">
+
+                        <form action="#" role="form" class="php-email-form">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <input type="text" name="name" class="form-control" id="name" placeholder="Nombre" required>
+                                </div>
+                                <div class="col-md-6 form-group mt-3 mt-md-0">
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Correo" required>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Asunto" required>
+                            </div>
+                            <div class="form-group mt-3">
+                                <textarea class="form-control" name="message" rows="5" placeholder="Mensaje" required></textarea>
+                            </div>
+                            <div class="my-3">
+                                <div class="loading">Cargando</div>
+                                <div class="error-message"></div>
+                                <div class="sent-message">Tu mensaje a sido enviado.</div>
+                            </div>
+                            <div class="text-center"><button type="submit">Enviar Mensaje</button></div>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section><!-- End Contact Section -->
+
+    </main><!-- End #main -->
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h3>Hosp. Luis Manuel Morillo King</h3>
+                        <p>
+                            Av. García Godoy 214 <br>
+                            La Vega 41000<br>
+                            Republica Dominicana <br><br>
+                            <strong>Teléfono:</strong> +1 809 573 3636<br>
+                            <strong>Correo:</strong> hospitalmorilloking@gmail.com<br>
+                        </p>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 footer-links">
+                        <h4>Enlaces</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Inicio</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Sobre Nosotros</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Servicios</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Departamentos</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Doctores</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 footer-newsletter">
+                        <h4>Nuestras Notivias</h4>
+                        <p>Informaciones sobre eventos y mejoras del Hospital</p>
+                        <form action="" method="post">
+                            <input type="email" name="email"><input type="submit" value="Suscribirse">
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container d-md-flex py-4">
+
+            <div class="me-md-auto text-center text-md-start">
+                <div class="copyright">
+                    &copy; Copyright <strong><span>MedicalApp</span></strong>. All Rights Reserved
+                </div>
+                <div class="credits">
+                    Dise&ntilde;o base de <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                </div>
+            </div>
+            <div class="social-links text-center text-md-right pt-3 pt-md-0">
+                <a href="https://twitter.com/morillokinghosp" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https://es-la.facebook.com/hospmorilloking/" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/hospmorilloking" class="instagram"><i class="bx bxl-instagram"></i></a>
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="~/Content/assets/vendor/purecounter/purecounter.js"></script>
+    <script src="~/Content/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/Content/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="~/Content/assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="~/Content/assets/js/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+﻿@model IEnumerable<MedicalApp.Models.Citas.Cita>
+
+@{
+    ViewBag.Title = "Listado de Citas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="panel panel-container ">
+    <button type="button" class="btn btn-primary btn-sm" title="Agregar Nueva Cita"
+            style="float: right; margin-top: -15px; margin-right: 5px; padding: 5px 15px 5px 10px;"
+            onclick="location.href='@Url.Action("Create", "Cita")'">
+        <span class="fa fa-plus">&nbsp;</span> Agregar Nueva Cita
+    </button>
+    <hr />
+    <table class="table-responsive table-hover table-striped display" width="100%" cellspacing="1">
+        <thead>
+            <tr>
+                <th>
+                    Código
+                </th>
+                <th>
+                    Cliente
+                </th>
+                <th>
+                    Teléfono
+                </th>
+                <th>
+                    Doctor
+                </th>
+                <th>
+                    Especialidad
+                </th>
+                <th>
+                    Comentario
+                </th>
+                <th>
+                    Fecha
+                </th>
+                <th>
+                   Estado
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                foreach (var term in Model)
+                {
+                    <tr style="@(term.Estado == MedicalApp.Models.Enums.EstadoCitaEnum.Pendiente ? "background-color:#ffcc00" : "")">
+                        <td>@Html.DisplayFor(modelItem => term.CitaId)</td>
+                        <td>@string.Format("{0} {1}", Html.DisplayFor(modelItem => term._Cliente.Nombre), @Html.DisplayFor(modelItem => term._Cliente.Apellido))</td>
+                        <td>@Html.DisplayFor(modelItem => term._Cliente.Telefono)</td>
+                        <td>@string.Format("{0} {1}", Html.DisplayFor(modelItem => term._Usuario.Nombre), @Html.DisplayFor(modelItem => term._Usuario.Apellido))</td>
+                        <td>@Html.DisplayFor(modelItem => term._AreaEspecialidad.Descripcion)</td>
+                        @if (term.Comentario.Length > 80)
+                        {
+                            <td>@Html.DisplayFor(modelItem => term.Comentario).ToString().Substring(0, 80)</td>
+                        }
+                        else 
+                        {
+                            <td>@Html.DisplayFor(modelItem => term.Comentario)</td>
+                        }
+                        <td>@Convert.ToDateTime(Html.DisplayFor(modelItem => term.FechaCita).ToString()).ToString("dd/MM/yy HH:mm")</td>
+                        <td>@Html.DisplayFor(modelItem => term.Estado)</td>
+                        <td align="right">
+                            @if (!term.Eliminado)
+                            {
+                                if (term.Estado == MedicalApp.Models.Enums.EstadoCitaEnum.Confirmada)
+                                {
+                                    <button type="button" class="btn btn-warning btn-sm" title="Pendiente" onclick="location.href='@Url.Action("Confirm", "Cita", new { id = term.Id }) '">
+                                        <span class="fa fa-calendar-minus-o">&nbsp;</span>
+                                    </button>
+                                }
+                                else if (term.Estado == MedicalApp.Models.Enums.EstadoCitaEnum.Pendiente)
+                                {
+                                    <button type="button" class="btn btn-success btn-sm" title="Confirmado" onclick="location.href='@Url.Action("Confirm", "Cita", new { id = term.Id }) '">
+                                        <span class="fa fa-calendar-check-o">&nbsp;</span>
+                                    </button>
+                                }
+                                <button type="button" class="btn btn-info btn-sm" title="Modificar" onclick="location.href='@Url.Action("Edit", "Cita", new { id = term.Id }) '">
+                                    <span class="fa fa-pencil">&nbsp;</span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick="location.href='@Url.Action("Delete", "Cita", new { id = term.Id }) '">
+                                    <span class="fa fa-eraser">&nbsp;</span>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

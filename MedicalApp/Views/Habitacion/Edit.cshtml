@@ -1,0 +1,60 @@
+﻿@model MedicalApp.Models.Edificios.Habitacion
+@{
+    ViewBag.Title = "Editar Habitacion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-container ">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.FechaCreacion)
+            @Html.HiddenFor(model => model.FechaModificacion)
+            @Html.HiddenFor(model => model.Estado)
+            @Html.HiddenFor(model => model.Eliminado)
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Nivel de Edificio</label>
+                <div class="col-md-9">
+                    @Html.DropDownList("EdificioNivelId", null, htmlAttributes: new { @class = "form-control"})
+                    @Html.ValidationMessageFor(model => model.EdificioNivelId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Código de Habitación</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.CodigoHabitacion, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.CodigoHabitacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Maximo de Clientes</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.MaximoClientes, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.MaximoClientes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+
+                        <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "Habitacion") '" />
+                        <input type="submit" value="Guardar" class="btn btn-info" onclick="return confirm('¿Seguro que desea editar la Habitacion?')" />
+                    </div>
+                </div>
+            </div><br />
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

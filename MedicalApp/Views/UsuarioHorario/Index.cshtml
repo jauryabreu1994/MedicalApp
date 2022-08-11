@@ -1,0 +1,69 @@
+﻿@model IEnumerable<MedicalApp.Models.Usuarios.UsuarioHorario>
+
+@{
+    ViewBag.Title = "Listado de Horarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-container ">
+    <button type="button" class="btn btn-primary btn-sm" title="Agregar Nuevo Horario"
+            style="float: right; margin-top: -15px; margin-right: 5px; padding: 5px 15px 5px 10px;"
+            onclick="location.href='@Url.Action("Create", "UsuarioHorario", new { UsuarioId = ViewBag.UsuarioId }) '">
+        <span class="fa fa-plus">&nbsp;</span> Agregar Nuevo Horario al Doctor @ViewBag.Nombre
+    </button>
+    <hr />
+    <table class="table-responsive table-hover table-striped display" width="100%" cellspacing="1">
+        <thead>
+            <tr>
+                <th>
+                    Día
+                </th>
+                <th>
+                    Horario
+                </th>
+                <th>
+                    Cantidad
+                </th>
+                <th>
+                    Fecha Creación
+                </th>
+                <th>
+                   Estado
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                foreach (var term in Model)
+                {
+            <tr style="@(term.Eliminado == true ? "background-color:#FAE6E9" : "")">
+
+
+                <td>@Html.DisplayFor(modelItem => term.Dia)</td>
+
+
+                <td>@string.Format("{0}:{1}", @term._Horario.Hora.ToString("00"), @term._Horario.Minutos.ToString("00"))</td>
+                <td>@Html.DisplayFor(modelItem => term.CantidadPacientes)</td>
+                <td>@Html.DisplayFor(modelItem => term.FechaCreacion)</td>
+                <td>@Html.DisplayFor(modelItem => term.Estado)</td>
+                <td align="right">
+                    @if (!term.Eliminado)
+                    {
+                        <button type="button" class="btn btn-info btn-sm" title="Modificar" onclick="location.href='@Url.Action("Edit", "UsuarioHorario", new { id = term.Id }) '">
+                            <span class="fa fa-pencil">&nbsp;</span>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" title="Eliminar" 
+                                onclick="return confirm('¿Seguro que desea eliminar este Horario?'),
+                                                location.href = '@Url.Action("Delete", "UsuarioHorario", new { id = term.Id }) '">
+                            <span class="fa fa-eraser">&nbsp;</span>
+                        </button>
+                    }
+                </td>
+            </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

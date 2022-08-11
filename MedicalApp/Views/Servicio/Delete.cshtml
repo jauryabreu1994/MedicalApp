@@ -1,0 +1,41 @@
+﻿@model MedicalApp.Models.Servicios.Servicio
+
+@{
+    ViewBag.Title = "Eliminar: " + @Model.Descripcion;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    p {
+        margin-bottom: 0px;
+    }
+</style>
+<div class="panel panel-container text-center">
+    <h3>¿Estás seguro/a que quieres eliminar este Servicio?</h3>
+    <div>
+        <hr />
+
+        <p><label>Id: </label> @Html.DisplayFor(model => model.ServicioId)</p>
+        <p><label>Descripción: </label> @Html.DisplayFor(model => model.Descripcion)</p>
+        <p><label>Descripción Ext.: </label> @Html.DisplayFor(model => model.DescriptionExtendida)</p>
+        <p><label>Costo: </label> @Html.DisplayFor(model => model.Costo)</p>
+        <p><label>Impuesto: </label> @Html.DisplayFor(model => model._Impuesto.Descripcion)</p>
+        <p><label>Fecha Creación: </label> @Html.DisplayFor(model => model.FechaCreacion)</p>
+        <p><label>Fecha Modificación: </label> @Html.DisplayFor(model => model.FechaModificacion)</p>
+        <p><label>Estado: </label> @Html.DisplayFor(model => model.Estado)</p>
+        <br />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+
+                        <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "Servicio") '" />
+                        <input type="submit" value="Eliminar" class="btn btn-danger" />
+                    </div>
+                </div>
+            </div><br /><br />
+        }
+    </div>
+</div>

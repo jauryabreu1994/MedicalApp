@@ -1,0 +1,44 @@
+﻿@model MedicalApp.Models.Usuarios.GrupoPermisoModel
+
+@{
+    ViewBag.Title = "Asignacion de Permisos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .select-multi {
+        margin-left: 5%;
+        width: 90%;
+        font-size: 18px;
+    }
+</style>
+<div class="panel panel-container ">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            <div class="form-group">
+                    @Html.ListBoxFor(model => model.grupoPermisosSeleccionados, Model.grupoPermisos, htmlAttributes: new { @class = "select-multi", @style= "height: 200px" })
+               
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+
+                        <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "GrupoUsuario") '" />
+                        <input type="submit" value="Guardar" class="btn btn-info" onclick="return confirm('¿Seguro que desea modificar la asignacion de Permisos?')" />
+                    </div>
+                </div>
+            </div><br />
+        </div>
+    }
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

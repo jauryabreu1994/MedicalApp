@@ -1,0 +1,200 @@
+﻿@model MedicalApp.Models.Clientes.ClienteHistorial
+
+@{
+    ViewBag.Title = "Perfil del Paciente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    MedicalApp.Models.Clientes.Cliente cliente = ViewBag.Cliente as MedicalApp.Models.Clientes.Cliente;
+    MedicalApp.Models.Citas.Cita cita = ViewBag.Cita as MedicalApp.Models.Citas.Cita;
+    List<MedicalApp.Models.Clientes.ClienteHistorial> historial = ViewBag.ClienteHistorial as List<MedicalApp.Models.Clientes.ClienteHistorial>;
+}
+
+<div class="panel panel-container ">
+    <div class="main-body">
+
+
+        <!-- /Breadcrumb -->
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img src="~/Content/img/profile.png" alt="Admin" class="rounded-circle" width="150">
+                            <div class="mt-3">
+                                <h4>@string.Format("{0} {1}", cliente.Nombre, cliente.Apellido)</h4>
+                                <p class="text-secondary mb-1">@string.Format("{0} años", Convert.ToInt32(DateTime.Today.AddTicks(-cliente.FechaNacimiento.Ticks).Year - 1).ToString("###"))</p>
+                                <p class="text-muted font-size-sm">@string.Format("{0}", cliente.Identificacion)</p>
+                                <p class="text-secondary mb-1">@string.Format("{0}", cliente.Correo)</p>
+                                <p class="text-muted font-size-sm">@string.Format("{0}, {1}, {2}", cliente._Pais.Descripcion, cliente._Ciudad.Descripcion, cliente.Direccion)</p>
+                                <a class="btn btn-info " href="@Url.Action("Edit", "Cliente", new { id = cliente.Id }) ">Actualizar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <ul class="list-group list-group-flush">
+                        @if (historial.Count() > 0)
+                        {
+                            foreach (var term in historial)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                    
+                                    <h6 class="mb-0text-info">@term.FechaCreacion.ToString("dd-MM-yyyy")</h6>
+                                    <h6 class="mb-0"><strong>Documentacion: </strong> @term.Documentacion</h6>
+                                    <span class="text-secondary"><strong>Indicaciones: </strong> @term.Indicaciones</span><br/>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Doctor/a</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @string.Format("{0} {1}", cita._Usuario.Nombre, cita._Usuario.Apellido)
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Área de Especialidad</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @cita._AreaEspecialidad.Descripcion
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Comentario</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @cita.Comentario
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Fecha Cita</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                @cita.FechaCita.ToString("dd-MM-yyyy hh:mm")
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+
+                <div class="row gutters-sm">
+                    <div class="col-sm-12 mb-6">
+                        <div class="card h-100">
+
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.Id, new { Value = 0 })
+                                @Html.HiddenFor(model => model.FechaCreacion, new { Value = DateTime.Now })
+                                @Html.HiddenFor(model => model.FechaModificacion, new { Value = DateTime.Now })
+                                @Html.HiddenFor(model => model.Estado, new { Value = 1 })
+                                @Html.HiddenFor(model => model.Eliminado, new { Value = false })
+                                @Html.HiddenFor(model => model.UsuarioId, new { Value = 0 })
+                                @Html.HiddenFor(model => model.ClienteId, new { Value = cliente.Id })
+                                <div class="card-body">
+                                    <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Registrar</i> Consulta</h6>
+                                    <small>Documentacion</small>
+                                    <div>
+                                        <textarea id="Documentacion" name="Documentacion" class="form-control" rows="2" value="@ViewBag.Documentacion"></textarea>
+                                    </div>
+                                    <small>Indicaciones</small>
+                                    <div>
+                                        <textarea id="Indicaciones" name="Indicaciones" class="form-control" rows="2" value="@ViewBag.Indicaciones"></textarea>
+                                    </div><br />
+                                    <div class="row">
+                                        <div class="col text-center">
+
+                                            <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Pacientes", "Cita") '" />
+                                            <input type="submit" value="Guardar" class="btn btn-info" onclick="return confirm('¿Seguro que desea guardar la Consulta?')" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    <style type="text/css">
+        body {
+            margin-top: 20px;
+            color: #1a202c;
+            text-align: left;
+            background-color: #e2e8f0;
+        }
+
+        .main-body {
+            padding: 15px;
+        }
+
+        .card {
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 0 solid rgba(0,0,0,.125);
+            border-radius: .25rem;
+        }
+
+        .card-body {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 1rem;
+        }
+
+        .gutters-sm {
+            margin-right: -8px;
+            margin-left: -8px;
+        }
+
+            .gutters-sm > .col, .gutters-sm > [class*=col-] {
+                padding-right: 8px;
+                padding-left: 8px;
+            }
+
+        .mb-3, .my-3 {
+            margin-bottom: 1rem !important;
+        }
+
+        .bg-gray-300 {
+            background-color: #e2e8f0;
+        }
+
+        .h-100 {
+            height: 100% !important;
+        }
+
+        .shadow-none {
+            box-shadow: none !important;
+        }
+    </style>
+

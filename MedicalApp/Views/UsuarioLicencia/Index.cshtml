@@ -1,0 +1,59 @@
+﻿@model IEnumerable<MedicalApp.Models.Usuarios.UsuarioLicencia>
+
+@{
+    ViewBag.Title = "Listado de Licencia por Doctor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-container ">
+    <button type="button" class="btn btn-primary btn-sm" title="Agregar Nueva Licencia"
+            style="float: right; margin-top: -15px; margin-right: 5px; padding: 5px 15px 5px 10px;"
+            onclick="location.href='@Url.Action("Create", "UsuarioLicencia", new { UsuarioId = ViewBag.UsuarioId }) '">
+        <span class="fa fa-plus">&nbsp;</span> Agregar Nueva Licencia al Doctor @ViewBag.Nombre
+    </button>
+    <hr />
+    <table class="table-responsive table-hover table-striped display" width="100%" cellspacing="1">
+        <thead>
+            <tr>
+                <th>
+                    No.
+                </th>
+                <th>
+                    Fecha de Licencia
+                </th>
+                <th>
+                   Estado
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                foreach (var term in Model)
+                {
+                    <tr style="@(term.Eliminado == true ? "background-color:#FAE6E9" : "")">
+
+
+                        <td>@Html.DisplayFor(modelItem => term.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => term.FechaLicencia)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Estado)</td>
+                        <td align="right">
+                            @if (!term.Eliminado)
+                            {
+                                <button type="button" class="btn btn-info btn-sm" title="Modificar" onclick="location.href='@Url.Action("Edit", "UsuarioLicencia", new { id = term.Id }) '">
+                                    <span class="fa fa-pencil">&nbsp;</span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm" title="Eliminar"
+                                        onclick="return confirm('¿Seguro que desea eliminar esta Licencia?'),
+                                                location.href = '@Url.Action("Delete", "UsuarioLicencia", new { id = term.Id }) '">
+                                    <span class="fa fa-eraser">&nbsp;</span>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

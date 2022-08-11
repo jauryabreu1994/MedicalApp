@@ -1,0 +1,187 @@
+﻿@model MedicalApp.Models.Clientes.Cliente
+
+@{
+    ViewBag.Title = "Perfil";
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+}
+<div class="row">
+
+    <!-- Content Column -->
+    <div class="col-lg-12 mb-12">
+
+        <!-- Project Card Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Perfil</h6>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.ClienteId)
+                    @Html.HiddenFor(model => model.FechaCreacion)
+                    @Html.HiddenFor(model => model.FechaModificacion)
+                    @Html.HiddenFor(model => model.Estado)
+                    @Html.HiddenFor(model => model.Eliminado)
+                    @Html.HiddenFor(model => model.Identificacion)
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                    <div class="mt-4 mb-2">
+                        <label>Identificación</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            <input class="form-control" readonly type="text" value="@Model.Identificacion"/>
+                            @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Nombre</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Apellido</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Nombre Fiscal</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            @Html.EditorFor(model => model.NombreFiscal, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.NombreFiscal, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Fecha de Nacimiento</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            @Html.EditorFor(model => model.FechaNacimiento, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>País</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            @Html.DropDownList("PaisId", null, htmlAttributes: new { @class = "form-control", autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.PaisId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Ciudad</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            <select id="CiudadId" name="CiudadId" class="form-control"></select>
+                            @Html.ValidationMessageFor(model => model.CiudadId, "", new { @class = "text-danger", @required = "required" })
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Dirección</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Correo</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Teléfono</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", @required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Genero</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            @Html.EnumDropDownListFor(model => model.Genero, htmlAttributes: new { @class = "form-control", autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.Genero, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col text-center">
+
+                                <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "Paciente") '" />
+                                <input type="submit" value="Guardar" class="btn btn-primary" onclick="return confirm('¿Seguro que desea actualizar el Perfil?')" />
+                            </div>
+                        </div>
+                    </div><br />
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+        $(function () {
+            $("#PaisId").change(function () {
+                var id = $(this).val();
+                if (id !== '')
+                    getCiudad(id, false);
+            });
+        });
+
+        $(document).ready(function () {
+            var id = $('#PaisId').val();
+            if(id !== '')
+                getCiudad(id, true);
+        });
+
+        function getCiudad(id, isLoad) {
+            $("#CiudadId").empty();
+            $.get("/Paciente/Ciudad_Bind", { paisId: id }, function (data) {
+                var lines = "<option>--- Seleccionar Ciudad ---</option>";
+                $.each(data, function (i, valor) {
+                    lines += "<option value=" + valor.Value + ">" + valor.Text + "</option>";
+                });
+                $("#CiudadId").html(lines);
+                if (isLoad === true) {
+                    $("#CiudadId").val(@Model.CiudadId);
+                }
+            });
+        }
+</script>
+

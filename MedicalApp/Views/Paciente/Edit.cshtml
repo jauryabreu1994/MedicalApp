@@ -1,0 +1,107 @@
+﻿@model MedicalApp.Models.Citas.Cita
+
+@{
+    ViewBag.Title = "Modificar Cita";
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+    List<MedicalApp.Models.Empresas.Empresa> empresas = ViewBag.Empresas as List<MedicalApp.Models.Empresas.Empresa>;
+    List<MedicalApp.Models.Usuarios.AreaEspecialidad> areaEspecialidades = ViewBag.AreaEspecialidades as List<MedicalApp.Models.Usuarios.AreaEspecialidad>;
+}
+<div class="row">
+
+    <!-- Content Column -->
+    <div class="col-lg-12 mb-12">
+
+        <!-- Project Card Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Informacion de Citas</h6>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.EmpresaId)
+                    @Html.HiddenFor(model => model.AreaEspecialidadId)
+                    @Html.HiddenFor(model => model.UsuarioId)
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="mt-4 mb-2">
+                        <label>Empresa</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            <input class="form-control text-box single-line" id="Empresa" name="Empresa" type="text" value="@ViewBag.Empresa" readonly required>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Área de Especialidad</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            <input class="form-control text-box single-line" id="AreaEspecialidad" name="AreaEspecialidad" type="text" value="@ViewBag.AreaEspecialidad" readonly required>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Doctor/a</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            <input class="form-control text-box single-line" id="Doctor" name="Doctor" type="text" value="@ViewBag.Doctor" readonly required>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Tipo de Cita</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            @Html.EnumDropDownListFor(model => model.TipoCita, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TipoCita, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Fecha y Hora</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-4 mb-2 mb-sm-2">
+                            <input class="form-control text-box single-line" id="fecha" name="FechaCita" type="date" min="@DateTime.Now" max="@DateTime.Now.AddMonths(3)" step="1" value="@ViewBag.Fecha" readonly>
+                        </div>
+                        <div class="col-sm-2 mb-2 mb-sm-2">
+                            <input type="text" id="hours" name="Hora" class="form-control text-box single-line" value="@ViewBag.Hora" readonly>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="minutes" name="Minutos" class="form-control text-box single-line" value="@ViewBag.Minutos" readonly>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Comentario</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11">
+                            <input class="form-control text-box single-line" id="Comentario" name="Comentario" type="text" value="@ViewBag.Comentario" autocomplete="off" required>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col text-center">
+
+                                <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Edit", "Paciente") '" />
+                                <input type="submit" value="Guardar" class="btn btn-primary" onclick="return confirm('¿Seguro que desea modificar la Cita?')" />
+                            </div>
+                        </div>
+                    </div><br />
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

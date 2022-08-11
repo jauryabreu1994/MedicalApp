@@ -1,0 +1,146 @@
+﻿@model MedicalApp.Models.Servicios.Servicio
+
+@{
+    ViewBag.Title = "Crear Servicio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<MedicalApp.Models.Usuarios.Usuario> usuarios = ViewBag.Usuarios as List<MedicalApp.Models.Usuarios.Usuario>;
+}
+
+<div class="panel panel-container ">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id, new { Value = 0 })
+        @Html.HiddenFor(model => model.FechaCreacion, new { Value = DateTime.Now })
+        @Html.HiddenFor(model => model.FechaModificacion, new { Value = DateTime.Now })
+        @Html.HiddenFor(model => model.Estado, new { Value = 1 })
+        @Html.HiddenFor(model => model.Eliminado, new { Value = false })
+        @Html.HiddenFor(model => model.EmpresaId, new { Value = 1 })
+
+        <div class="form-group">
+            <label class="control-label col-xs-2 col-sm-2 col-xs-2 col-sm-2 col-md-2">Descripción</label>
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Descripción Extendida</label>
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.DescripcionExtendida, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.DescripcionExtendida, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-2 col-sm-2 col-xs-2 col-sm-2 col-md-2"> Asignación de Servicio</label>
+            <div class="col-xs-8 col-sm-8 col-xs-8 col-sm-8 col-md-8">
+                <input class="form-control text-box single-line" id="Usuario" name="Usuario" type="text" value="@ViewBag.Usuario" readonly>
+                <input class="form-control text-box single-line" id="UsuarioId" name="UsuarioId" type="hidden" value="@ViewBag.UsuarioId">
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                <button type="button" class="btn btn-info btn-sm" title="Buscar Cliente" style="height:45px" data-toggle="modal" data-target="#modalSearchUser">
+                    <span class="fa fa-search">&nbsp;</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Precio</label>
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.Costo, new { htmlAttributes = new { @class = "form-control", autocomplete = "off"  } })
+                @Html.ValidationMessageFor(model => model.Costo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Impuesto</label>
+            <div class="col-md-8">
+                @Html.DropDownList("ImpuestoId", null, htmlAttributes: new { @class = "form-control", autocomplete = "off"  })
+                @Html.ValidationMessageFor(model => model.ImpuestoId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+
+                    <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "Servicio") '" />
+                    <input type="submit" value="Guardar" class="btn btn-info" onclick="return confirm('¿Seguro que desea guardar el Servicio?')" />
+                </div>
+            </div>
+        </div><br />
+    </div>
+    }
+</div>
+
+<div class="modal fade" id="modalSearchUser" tabindex="-1" role="dialog" aria-labelledby="modalSearchUserLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 700px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title" id="modalSearchUserLabel">Seleccionar Usuario</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row cont-filtros">
+                    <div class="table-responsive tabla-disponible">
+
+                        <table class="table display" id="dataTable" width="100%" cellspacing="0"
+                               data-order='[[ 0, "asc" ]]' data-page-length='5'>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Cedula</th>
+                                    <th>Especialidad</th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (usuarios.Count > 0)
+                                {
+                                    foreach (var term in usuarios)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(IndexModel => term.Nombre)</td>
+                                            <td>@Html.DisplayFor(IndexModel => term.Apellido)</td>
+                                            <td>@Html.DisplayFor(IndexModel => term.Identificacion).ToString().Replace("-", "")</td>
+                                            <td>@Html.DisplayFor(IndexModel => term._AreaEspecialidad.Descripcion).ToString().Replace("-", "")</td>
+                                            <td>
+                                                <button value='@term.Id' type="submit" name="UserSelected" onclick="SeleccionarUsuario('@string.Format("{0} {1}",
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Nombre),
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Apellido))',
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Id))"
+                                                        class="btn btn-sm btn-outline-dark shadow-sm">
+                                                    Seleccionar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SeleccionarUsuario(name, id) {
+        document.getElementById("Usuario").value = name;
+        document.getElementById("UsuarioId").value = id;
+        $('#modalSearchUser').modal('hide');
+        $("#modalSearchUser .close").click();
+    }   
+</script>

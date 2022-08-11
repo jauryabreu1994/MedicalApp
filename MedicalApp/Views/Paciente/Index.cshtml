@@ -1,0 +1,157 @@
+﻿@model MedicalApp.Models.DashBoard.DashBoard
+@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+}
+<!-- Content Row -->
+<div class="row">
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Proxima Cita
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Proxima_Cita</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Citas Pendientes
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Cant_PendientePorConfirmar</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-clock fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Citas Confirmadas
+                        </div>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.Cant_Consultas</div>
+                            </div>
+                            <div class="col">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-check fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Requests Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Total de Citas
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Cant_Citas</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Content Row -->
+<!-- Content Row -->
+<div class="row">
+
+    <!-- Content Column -->
+    <div class="col-lg-12 mb-12">
+
+        <!-- Project Card Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Proximas Citas</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table display" id="dataTable" width="100%" cellspacing="0"
+                                        data-order='[[ 4, "asc" ]]' data-page-length='5'>
+                        <thead>
+                            <tr>
+                                <th>Lugar</th>
+                                <th>Doctor/a</th>
+                                <th>Especialidad</th>
+                                <th>Comentario</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var term in Model.Citas)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => term._Empresa.Nombre)</td>
+                                    <td>@string.Format("{0} {1}", Html.DisplayFor(modelItem => term._Usuario.Nombre), @Html.DisplayFor(modelItem => term._Usuario.Apellido))</td>
+                                    <td>@Html.DisplayFor(modelItem => term._AreaEspecialidad.Descripcion)</td>
+                                    <td>@Html.DisplayFor(modelItem => term.Comentario)</td>
+                                    <td>@Convert.ToDateTime(Html.DisplayFor(modelItem => term.FechaCita).ToString()).ToString("yyyy/MM/dd HH:mm")</td>
+                                    
+                                    @if (term.Estado == MedicalApp.Models.Enums.EstadoCitaEnum.Pendiente)
+                                    {
+                                        <td>Pendiente</td>
+                                        <td style="text-align: center">
+                                            <a href="@Url.Action("Delete", "Paciente", new { id = term.Id })" 
+                                               onclick="return confirm('¿Seguro que desea cancelar esta Cita?')" 
+                                               class="btn btn-danger ">
+                                                <span class="icon ">
+                                                    <i class="fas fa-trash"></i>
+                                                </span>
+                                            </a>
+                                        </td>
+                                    }
+                                    else {
+                                        <td>Confirmada</td>
+                                        <td> </td>
+                                    }
+                                </tr>
+                            }
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

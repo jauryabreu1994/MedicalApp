@@ -1,0 +1,88 @@
+﻿@model IEnumerable<MedicalApp.Models.Clientes.ClienteHistorial>
+@{
+    ViewBag.Title = "Historial del Paciente";
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+}
+
+<!-- Content Row -->
+<div class="row">
+
+    <!-- Content Column -->
+    <div class="col-lg-12 mb-12">
+
+        <!-- Project Card Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Listado de Indicaciones</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <input type="button" id="printerButton" name="print" value="Print It" />
+                    <table class="table display" id="dataTable" width="100%" cellspacing="0"
+                           data-order='[[ 4, "asc" ]]' data-page-length='8'>
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Doctor/a</th>
+                                <th>Indicaciones</th>
+                                <th>Documentación</th>
+                                <th>Fecha de Creación</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var term in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => term.Id)</td>
+                                    <td>@string.Format("{0} {1}", Html.DisplayFor(modelItem => term._Usuario.Nombre), @Html.DisplayFor(modelItem => term._Usuario.Apellido))</td>
+                                    <td>@Html.DisplayFor(modelItem => term.Indicaciones)</td>
+                                    <td>@Html.DisplayFor(modelItem => term.Documentacion)</td>
+                                    <td>@Convert.ToDateTime(Html.DisplayFor(modelItem => term.FechaCreacion).ToString()).ToString("yyyy/MM/dd")</td>
+                                    <td style="text-align: center">
+                                        @using (Html.BeginForm())
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <button onclick="return confirm('¿Seguro que desea mostrar el reporte?')"
+                                                    class="btn btn-secondary" value='@term.Id' type="submit" name="invoice">
+                                                <span class="icon">
+                                                    <i class="fa fa-file"></i>
+                                                </span>
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var divElementContents = @ViewBag.File;
+        if (divElementContents !== '')
+        {
+            var windows = window.open('', '', 'height=400, width=400');
+            windows.document.write(divElementContents);
+            windows.document.close();
+            windows.print();
+        }
+
+    });
+
+    function printDivContent() {
+        var divElementContents = @ViewBag.File;
+        var windows = window.open('', '', 'height=400, width=400');
+        windows.document.write('<html>');
+        windows.document.write('<body > <h1>Div\'s Content Are Printed Below<br>');
+        windows.document.write(divElementContents);
+        windows.document.write('</body></html>');
+    }
+</script>

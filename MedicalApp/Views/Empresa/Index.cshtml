@@ -1,0 +1,68 @@
+﻿@model IEnumerable<MedicalApp.Models.Empresas.Empresa>
+
+
+@{
+    ViewBag.Title = "Listado de Empresas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-container ">
+    <button type="button" class="btn btn-primary btn-sm" title="Agregar Nueva Empresa"
+            style="float: right; margin-top: -15px; margin-right: 5px; padding: 5px 15px 5px 10px;"
+            onclick="location.href='@Url.Action("Create", "Empresa")'">
+        <span class="fa fa-plus">&nbsp;</span> Agregar Nueva Empresa
+    </button>
+    <hr />
+    <table class="table-responsive table-hover table-striped display" width="100%" cellspacing="1">
+        <thead>
+            <tr>
+                <th>
+                    RNC
+                </th>
+                <th>
+                    Nombre Comercila
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Correo)
+                </th>
+                <th>
+                    Teléfono
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CodiLicencia)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FechaModificacion)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                foreach (var term in Model)
+                {
+                    <tr style="@(term.Eliminado == true ? "background-color:#FAE6E9" : "")">
+                        <td>@Html.DisplayFor(modelItem => term.Identificacion)</td>
+                        <td>@Html.DisplayFor(modelItem => term.NombreFiscal)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Correo)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Telefono)</td>
+                        <td>@Html.DisplayFor(modelItem => term.CodiLicencia)</td>
+                        <td>@Html.DisplayFor(modelItem => term.FechaModificacion)</td>
+                        <td align="right">
+                            @if (!term.Eliminado)
+                            {
+                                <button type="button" class="btn btn-info btn-sm" title="Modificar" onclick="location.href='@Url.Action("Edit", "Empresa", new { id = term.Id }) '">
+                                    <span class="fa fa-pencil">&nbsp;</span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick="location.href='@Url.Action("Delete", "Empresa", new { id = term.Id }) '">
+                                    <span class="fa fa-eraser">&nbsp;</span>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

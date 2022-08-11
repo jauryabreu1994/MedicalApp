@@ -1,0 +1,327 @@
+﻿@model MedicalApp.Models.Citas.Cita
+
+@{
+    ViewBag.Title = "Crear Cita";
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+    List<MedicalApp.Models.Empresas.Empresa> empresas = ViewBag.Empresas as List<MedicalApp.Models.Empresas.Empresa>;
+    List<MedicalApp.Models.Usuarios.AreaEspecialidad> areaEspecialidades = ViewBag.AreaEspecialidades as List<MedicalApp.Models.Usuarios.AreaEspecialidad>;
+}
+<div class="row">
+
+    <!-- Content Column -->
+    <div class="col-lg-12 mb-12">
+
+        <!-- Project Card Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Informacion de Citas</h6>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="mt-4 mb-2">
+                        <label>Empresa</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            <input class="form-control text-box single-line" id="Empresa" name="Empresa" type="text" value="@ViewBag.Empresa" readonly required>
+                            <input class="form-control text-box single-line" id="EmpresaId" name="EmpresaId" type="hidden" value="@ViewBag.EmpresaId">
+                        </div>
+                        <div class="col-sm-1">
+                            <a href="#" class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#modalSearchCustomer">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Área de Especialidad</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            <input class="form-control text-box single-line" id="AreaEspecialidad" name="AreaEspecialidad" type="text" value="@ViewBag.AreaEspecialidad" required readonly>
+                            <input class="form-control text-box single-line" id="AreaEspecialidadId" name="AreaEspecialidadId" type="hidden" value="@ViewBag.AreaEspecialidadId">
+                        </div>
+                        <div class="col-sm-1">
+                            <a href="#" class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#modalSearchAreaEspecialidad">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Doctor/a</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            <select id="DoctorId" name="DoctorId" class="form-control" required></select>
+                            @Html.ValidationMessageFor(model => model.UsuarioId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Tipo de Cita</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11 mb-2 mb-sm-2">
+                            @Html.EnumDropDownListFor(model => model.TipoCita, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TipoCita, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Fecha y Hora</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-4 mb-2 mb-sm-2">
+                            <input class="form-control text-box single-line" id="FechaId" name="FechaCita" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.AddMonths(3).ToString("yyyy-MM-dd")" step="1" value="@ViewBag.Fecha">
+                        </div>
+                        <div class="col-sm-2 mb-2 mb-sm-2">
+                            <select id="HoraId" name="Hora" class="form-control text-box single-line" value="@ViewBag.Hora"></select>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 mb-2">
+                        <label>Comentario</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-11">
+                            <input class="form-control text-box single-line" id="Comentario" name="Comentario" type="text" value="@ViewBag.Comentario" autocomplete="off" required>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col text-center">
+
+                                <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Citas", "Paciente") '" />
+                                <input type="submit" value="Guardar" class="btn btn-primary" onclick="return confirm('¿Seguro que desea guardar la Cita?')" />
+                            </div>
+                        </div>
+                    </div><br />
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="modal fade" id="modalSearchCustomer" tabindex="-1" role="dialog" aria-labelledby="modalSearchCustomerLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="width: 100%;">
+                    <div class="modal-header">
+
+                        <h3 class="modal-title" id="modalSearchCustomerLabel">Seleccionar Empresa</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row cont-filtros">
+                            <div class="table-responsive tabla-disponible">
+
+                                <table class="table display" id="dataTable" width="100%" cellspacing="0"
+                                        data-order='[[ 0, "asc" ]]' data-page-length='5'>
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>RNC</th>
+                                            <th>Direccion</th>
+                                            <th></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (empresas.Count > 0)
+                                        {
+                                            foreach (var term in empresas)
+                                            {
+                                                <tr>
+                                                    <td>@Html.DisplayFor(IndexModel => term.Nombre)</td>
+                                                    <td>@Html.DisplayFor(IndexModel => term.Identificacion).ToString().Replace("-", "")</td>
+                                                    <td>@Html.DisplayFor(IndexModel => term.Direccion)</td>
+                                                    <td>
+                                                        <button value='@term.Id' type="submit" name="CustomerSelected" onclick="SeleccionarEmpresa('@string.Format("{0}, RNC: {1}",
+                                                                                                                                    @Html.DisplayFor(IndexModel => term.Nombre),
+                                                                                                                                    @Html.DisplayFor(IndexModel => term.Identificacion))',
+                                                                                                                                    @Html.DisplayFor(IndexModel => term.Id))"
+                                                                class="btn btn-sm btn-outline-dark shadow-sm">
+                                                            Seleccionar
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalSearchAreaEspecialidad" tabindex="-1" role="dialog" aria-labelledby="modalSearchAreaEspecialidadLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="width: 100%;">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modalSearchAreaEspecialidadLabel">Seleccionar Area Especialidad</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row cont-filtros">
+                            <div class="table-responsive tabla-disponible">
+
+                                <table class="table display" id="dataTable2" width="100%" cellspacing="0"
+                                        data-order='[[ 0, "asc" ]]' data-page-length='5'>
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Área</th>
+                                            <th>Especialidad</th>
+                                            <th></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (areaEspecialidades.Count > 0)
+                                        {
+                                            foreach (var term in areaEspecialidades)
+                                            {
+                                                <tr>
+                                                    <td>@Html.DisplayFor(IndexModel => term.Id)</td>
+                                                    <td>@Html.DisplayFor(IndexModel => term._AreaGeneral.Descripcion)</td>
+                                                    <td>@Html.DisplayFor(IndexModel => term.Descripcion)</td>
+                                                    <td>
+                                                        <button value='@term.Id' type="submit" name="AreaEspecialidadSelected" onclick="SeleccionarAreaEspecialidad(
+                                                                                                                            '@Html.DisplayFor(IndexModel => term.Descripcion)',
+                                                                                                                                @Html.DisplayFor(IndexModel => term.Id))"
+                                                                class="btn btn-sm btn-outline-dark shadow-sm">
+                                                            Seleccionar
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+            $(document).ready(function () {
+                var myJsVariable = '@ViewBag.Fecha';
+
+                if (isNaN(myJsVariable)) {
+                        document.getElementById('fecha').value = '@ViewBag.Fecha';
+                }
+            });
+        </script>
+        <script>
+        function SeleccionarEmpresa(name, id) {
+            document.getElementById("Empresa").value = name;
+            document.getElementById("EmpresaId").value = id;
+            $('#modalSearchCustomer').modal('hide');
+            $("#modalSearchCustomer .close").click();
+        }
+
+        function SeleccionarAreaEspecialidad(name, id) {
+            document.getElementById("AreaEspecialidad").value = name;
+            document.getElementById("AreaEspecialidadId").value = id;
+            $('#modalSearchAreaEspecialidad').modal('hide');
+            $("#modalSearchAreaEspecialidad .close").click();
+            let companyId = document.getElementById("EmpresaId").value;
+            getDoctor(id, companyId);
+        }
+
+        $(function () {
+            $("#AreaEspecialidadId").change(function () {
+                var id = $(this).val();
+                let companyId = document.getElementById("EmpresaId").value;
+                if (id !== '' && companyId != '')
+                    getDoctor(id, companyId);
+            });
+        });
+
+        $(document).ready(function () {
+            var id = $('#AreaEspecialidadId').val();
+            let companyId = document.getElementById("EmpresaId").value;
+            if (id !== '' && companyId != '')
+                getDoctor(id, companyId);
+        });
+
+        function getDoctor(id, companyId) {
+
+            $("#DoctorId").empty();
+            $.get("/Paciente/Doctor_Bind", { areaEspecialidadId: id, empresaId: companyId}, function (data) {
+                var lines = "<option>--- Seleccionar Médico ---</option>";
+        $.each(data, function (i, valor) {
+            lines += "<option value=" + valor.Value + ">" + valor.Text + "</option>";
+                });
+                $("#DoctorId").html(lines);
+
+                var myJsVariable = '@ViewBag.DoctorId';
+                if (!isNaN(myJsVariable)) {
+                    document.getElementById('DoctorId').value = myJsVariable;
+                }
+            });
+        }
+        </script>
+
+
+        <script>
+            $(function () {
+                $("#DoctorId").change(function () {
+                    let DoctorId = $(this).val();
+                    let FechaId = $('#FechaId').val();
+                    if (DoctorId !== '' && FechaId != '')
+                        getHora(DoctorId, FechaId);
+                });
+            });
+
+            $(function () {
+                $("#FechaId").change(function () {
+                    let FechaId = $(this).val();
+                    let DoctorId = $('#DoctorId').val();
+                    if (DoctorId !== '' && FechaId != '')
+                        getHora(DoctorId, FechaId);
+                });
+            });
+
+            $(document).ready(function () {
+                let DoctorId = $('#DoctorId').val();
+                let FechaId = $('#FechaId').val();
+                if (DoctorId !== '' && FechaId != '')
+                    getHora(DoctorId, FechaId);
+            });
+
+            function getHora(DoctorId, FechaId) {
+                $("#HoraId").empty();
+                $.get("/Paciente/Hora_Bind", { doctorId: DoctorId, fechaId: FechaId}, function (data) {
+                    var lines = "<option>--- Seleccionar Hora ---</option>";
+            $.each(data, function (i, valor) {
+                lines += "<option value=" + valor.Value + ">" + valor.Text + "</option>";
+                    });
+                    $("#HoraId").html(lines);
+
+                    
+                });
+            }
+        </script>
+
+

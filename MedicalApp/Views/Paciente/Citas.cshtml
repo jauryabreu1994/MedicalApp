@@ -1,0 +1,101 @@
+﻿@model IEnumerable<MedicalApp.Models.Citas.Cita>
+@{
+    ViewBag.Title = "Citas";
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+}
+
+<!-- Content Row -->
+<div class="row">
+
+    <!-- Content Column -->
+    <div class="col-lg-12 mb-12">
+
+        <!-- Project Card Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Listado de Citas</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table display" id="dataTable" width="100%" cellspacing="0"
+                                        data-order='[[ 4, "asc" ]]' data-page-length='8'>
+                        <thead>
+                            <tr>
+                                <th>Lugar</th>
+                                <th>Doctor/a</th>
+                                <th>Especialidad</th>
+                                <th>Comentario</th>
+                                <th>Fecha Cita</th>
+                                <th>Fecha Creación</th>
+                                <th>Estado</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var term in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => term._Empresa.Nombre)</td>
+                                    <td>@string.Format("{0} {1}", Html.DisplayFor(modelItem => term._Usuario.Nombre), @Html.DisplayFor(modelItem => term._Usuario.Apellido))</td>
+                                    <td>@Html.DisplayFor(modelItem => term._AreaEspecialidad.Descripcion)</td>
+                                    <td>@Html.DisplayFor(modelItem => term.Comentario)</td>
+                                    <td>@Convert.ToDateTime(Html.DisplayFor(modelItem => term.FechaCita).ToString()).ToString("yyyy/MM/dd HH:mm")</td>
+                                    <td>@Convert.ToDateTime(Html.DisplayFor(modelItem => term.FechaCreacion).ToString()).ToString("yyyy/MM/dd")</td>
+                                    @if (term.Estado == MedicalApp.Models.Enums.EstadoCitaEnum.Pendiente)
+                                    {
+                                        <td>Pendiente</td>
+                                    }
+                                    else if (term.Estado == MedicalApp.Models.Enums.EstadoCitaEnum.Completada)
+                                    {
+                                        <td>Completada</td>
+                                    }
+                                    else if (term.Estado == MedicalApp.Models.Enums.EstadoCitaEnum.Confirmada)
+                                    {
+                                        <td>Confirmada</td>
+                                    }
+                                    else if (term.Estado == MedicalApp.Models.Enums.EstadoCitaEnum.Cancelada)
+                                    {
+                                        <td>Cancelada</td>
+                                    }
+                                    else
+                                    {
+                                        <td>En Proceso</td>
+                                    }
+
+
+                                    @if (term.Estado == MedicalApp.Models.Enums.EstadoCitaEnum.Pendiente)
+                                    {
+
+                                        <td style="text-align: center">
+                                            <a href="@Url.Action("Edit", "Paciente", new { id = term.Id })"
+                                               onclick="return confirm('¿Seguro que desea modificar esta Cita?')"
+                                               class="btn btn-warning">
+                                                <span class="icon">
+                                                    <i class="fas fa-pen"></i>
+                                                </span>
+                                            </a>
+                                            <a href="@Url.Action("Delete", "Paciente", new { id = term.Id })"
+                                               onclick="return confirm('¿Seguro que desea cancelar esta Cita?')"
+                                               class="btn btn-danger">
+                                                <span class="icon ">
+                                                    <i class="fas fa-trash"></i>
+                                                </span>
+                                            </a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td> </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,43 @@
+﻿@model MedicalApp.Models.Citas.Cita
+
+@{
+    ViewBag.Title = "Eliminar Cita de : " + string.Format("{0} {1}", Model._Cliente.Nombre, Model._Cliente.Apellido);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    p {
+        margin-bottom: 0px;
+    }
+</style>
+<div class="panel panel-container text-center">
+    <h3>¿Estás seguro/a que quieres eliminar esta Cita?</h3>
+    <div>
+        <hr />
+
+        <p><label>Código: </label> @Html.DisplayFor(model => model.CitaId)</p>
+        <p><label>Nombre: </label> @Html.DisplayFor(model => model._Cliente.Nombre)</p>
+        <p><label>Apellido: </label> @Html.DisplayFor(model => model._Cliente.Apellido)</p>
+        <p><label>Doctor: </label> @string.Format("{0} {1}", Html.DisplayFor(model => model._Usuario.Nombre), @Html.DisplayFor(model => model._Usuario.Apellido))</p>
+        <p><label>Especialidad: </label> @Html.DisplayFor(model => model._AreaEspecialidad.Descripcion)</p>
+        <p><label>Comentario: </label> @Html.DisplayFor(model => model.Comentario)</p>
+
+        <p><label>Fecha: </label> @Html.DisplayFor(model => model.FechaCita)</p>
+        <p><label>Estado: </label> @Html.DisplayFor(model => model.Estado)</p>
+        <br />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+
+                        <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "Cita") '" />
+                        <input type="submit" value="Eliminar" class="btn btn-danger" />
+                    </div>
+                </div>
+            </div><br /><br />
+        }
+    </div>
+</div>

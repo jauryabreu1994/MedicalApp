@@ -1,0 +1,71 @@
+﻿@model MedicalApp.Models.Usuarios.UsuarioHorario
+
+@{
+    ViewBag.Title = "Modificar Cantidad de Pacientes Permitidos en Horario de Trabajo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="panel panel-container ">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.UsuarioId)
+        @Html.HiddenFor(model => model.FechaCreacion)
+        @Html.HiddenFor(model => model.FechaModificacion, new { Value = DateTime.Now })
+        @Html.HiddenFor(model => model.Estado)
+        @Html.HiddenFor(model => model.Eliminado)
+        @Html.HiddenFor(model => model.Dia)
+        @Html.HiddenFor(model => model.HorarioId)
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-2"> Doctor/a</label>
+                <div class="col-md-9">
+                    <input class="form-control text-box single-line" id="ClienteId" name="ClienteId" type="text" value="@ViewBag.Nombre" readonly>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Día</label>
+                <div class="col-md-9">
+                    <input class="form-control text-box single-line" id="DiaId" name="DiaId" type="text" value="@ViewBag.Dia" readonly>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Horario Seleccionado</label>
+                <div class="col-md-9">
+                    <input class="form-control text-box single-line" id="HoraId" name="HoraId" type="text" value="@ViewBag.Hora" readonly>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Cantidad de Pacientes</label>
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.CantidadPacientes, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.CantidadPacientes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+
+                        <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "UsuarioHorario", new { UsuarioId = ViewBag.UsuarioId }) '" />
+                        <input type="submit" value="Guardar" class="btn btn-info" onclick="return confirm('¿Seguro que desea modificar el Horario?')" />
+                    </div>
+                </div>
+            </div><br />
+        </div>
+    }
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,67 @@
+﻿@model IEnumerable<MedicalApp.Models.MediosDePago.Pago>
+
+@{
+    ViewBag.Title = "Listado de Medios de Pago";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-container ">
+    <button type="button" class="btn btn-primary btn-sm" title="Agregar Nuevo Medio de Pago"
+            style="float: right; margin-top: -15px; margin-right: 5px; padding: 5px 15px 5px 10px;"
+            onclick="location.href='@Url.Action("Create", "Pago")'">
+        <span class="fa fa-plus">&nbsp;</span> Agregar Nuevo Medio de Pago
+    </button>
+    <hr />
+    <table class="table-responsive table-hover table-striped display" width="100%" cellspacing="1">
+        <thead>
+            <tr>
+                <th>
+                    Código
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Tasa de Cambio
+                </th>
+                <th>
+                    Tipo de Pago
+                </th>
+                <th>
+                    Fecha Modificación
+                </th>
+                <th>
+                   Estado
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                foreach (var term in Model)
+                {
+                    <tr style="@(term.Eliminado == true ? "background-color:#FAE6E9" : "")">
+                        <td>@Html.DisplayFor(modelItem => term.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Descripcion)</td>
+                        <td>@Html.DisplayFor(modelItem => term.TasaCambio)</td>
+                        <td>@Html.DisplayFor(modelItem => term.TipoPago)</td>
+                        <td>@Html.DisplayFor(modelItem => term.FechaModificacion)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Estado)</td>
+                        <td align="right">
+                            @if (!term.Eliminado)
+                            {
+                                <button type="button" class="btn btn-info btn-sm" title="Modificar" onclick="location.href='@Url.Action("Edit", "Pago", new { id = term.Id }) '">
+                                    <span class="fa fa-pencil">&nbsp;</span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick="location.href='@Url.Action("Delete", "Pago", new { id = term.Id }) '">
+                                    <span class="fa fa-eraser">&nbsp;</span>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

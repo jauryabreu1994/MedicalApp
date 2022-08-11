@@ -1,0 +1,82 @@
+﻿@model MedicalApp.Models.Usuarios.UsuarioContrasena
+
+@{
+    ViewBag.Title = "Contraseña Usuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-container ">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.UsuarioId)
+            @Html.HiddenFor(model => model.FechaCreacion)
+            @Html.HiddenFor(model => model.FechaModificacion)
+            @Html.HiddenFor(model => model.Estado)
+            @Html.HiddenFor(model => model.Eliminado)
+
+            <div class="form-group">
+                <label class="control-label col-md-2"> Contraseña Actual</label>
+                <div class="col-md-9">
+                    <input class="form-control text-box single-line" id="ContrasenaActual" name="ContrasenaActual" type="password" value="@ViewBag.ContrasenaActual">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2"> Contraseña Nueva</label>
+                <div class="col-md-9">
+                    <input class="form-control text-box single-line" id="Contrasena" name="Contraseña" type="password" min="6" value="@ViewBag.Contraseña">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2"> Repetir Contraseña Nueva</label>
+                <div class="col-md-9">
+                    <input class="form-control text-box single-line" id="RepetirContrasena" name="RepetirContrasena" type="password" min="6" value="@ViewBag.RepetirContrasena">
+                    <div class="text-danger" id="CheckPasswordMatch">
+
+                        <p class="text-danger">@ViewBag.Error</p>
+                    </div>
+                </div><br /><br /><br />
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-center">
+
+                            <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "Cliente") '" />
+                            <input type="submit" value="Guardar" class="btn btn-info" onclick="return confirm('¿Seguro que desea cambiar la Contraseña?')" />
+                        </div>
+                    </div>
+                </div><br />
+            </div>
+        </div>
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    function checkPasswordMatch() {
+        var password = $("#Contrasena").val();
+        var confirmPassword = $("#RepetirContrasena").val();
+        if (password != confirmPassword) {
+            $("#CheckPasswordMatch").html("Las Contraseñas NO coinciden");
+            $("#CheckPasswordMatch").css('color', 'red');
+        }
+        else {
+            $("#CheckPasswordMatch").html("Las Contraseñas coinciden");
+            $("#CheckPasswordMatch").css('color', 'green');
+        }
+    }
+
+    $(document).ready(function () {
+
+        $("#RepetirContrasena").keyup(checkPasswordMatch);
+        $("#Contrasena").keyup(checkPasswordMatch);
+
+    });
+</script>

@@ -1,0 +1,44 @@
+﻿@model MedicalApp.Models.Clientes.ClienteHistorial
+
+@{
+    ViewBag.Title = "Eliminar a: " + string.Format("{0} {1}", Model._Cliente.Nombre, Model._Cliente.Apellido);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    p {
+        margin-bottom: 0px;
+    }
+</style>
+<div class="panel panel-container text-center">
+    <h3>¿Estás seguro/a que quieres eliminar este Usuario?</h3>
+    <div>
+        <hr />
+
+        <p><label>Id: </label> @Html.DisplayFor(model => model.Id)</p>
+        <p><label>Nombre: </label> @Html.DisplayFor(model => model._Cliente.Nombre)</p>
+        <p><label>Apellido: </label> @Html.DisplayFor(model => model._Cliente.Apellido)</p>
+
+        <p><label>Nombre Doctor: </label> @Html.DisplayFor(model => model._Usuario.Nombre)</p>
+        <p><label>Nombre Apellido: </label> @Html.DisplayFor(model => model._Usuario.Apellido)</p>
+
+        <p><label>Indicaiones: </label> @Html.DisplayFor(model => model.Indicaciones)</p>
+        <p><label>Documentacion: </label> @Html.DisplayFor(model => model.Documentacion)</p>
+
+        <p><label>Fecha: </label> @Html.DisplayFor(model => model.FechaCreacion)</p>
+        <br />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+
+                        <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "ClienteHistorial", new { id = Model._Cliente.Id })) '" />
+                        <input type="submit" value="Eliminar" class="btn btn-danger" />
+                    </div>
+                </div>
+            </div><br /><br />
+        }
+    </div>
+</div>

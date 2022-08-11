@@ -1,0 +1,37 @@
+﻿@model MedicalApp.Models.Edificios.Edificio
+@{
+    ViewBag.Title = "Eliminar: " + @Model.Descripcion;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    p {
+        margin-bottom: 0px;
+    }
+</style>
+<div class="panel panel-container text-center">
+    <h3>¿Estás seguro/a que quieres eliminar este Edificio?</h3>
+    <div>
+        <hr />
+
+        <p><label>Id: </label> @Html.DisplayFor(model => model.Id)</p>
+        <p><label>Descripcion: </label> @Html.DisplayFor(model => model.Descripcion)</p>
+        <p><label>Fecha Creación: </label> @Html.DisplayFor(model => model.FechaCreacion)</p>
+        <p><label>Fecha Modificación: </label> @Html.DisplayFor(model => model.FechaModificacion)</p>
+        <p><label>Estado: </label> @Html.DisplayFor(model => model.Estado)</p>
+        <br />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+
+                        <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "Edificio") '" />
+                        <input type="submit" value="Eliminar" class="btn btn-danger" />
+                    </div>
+                </div>
+            </div><br /><br />
+        }
+    </div>
+</div>

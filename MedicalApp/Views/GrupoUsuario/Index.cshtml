@@ -1,0 +1,62 @@
+﻿@model IEnumerable<MedicalApp.Models.Usuarios.GrupoUsuario>
+
+@{
+    ViewBag.Title = "Listado de Grupo de Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-container ">
+    <button type="button" class="btn btn-primary btn-sm" title="Agregar Nuevo Grupo de Usuario"
+            style="float: right; margin-top: -15px; margin-right: 5px; padding: 5px 15px 5px 10px;"
+            onclick="location.href='@Url.Action("Create", "GrupoUsuario")'">
+        <span class="fa fa-plus">&nbsp;</span> Agregar Nuevo Grupo de Usuario
+    </button>
+    <hr />
+    <table class="table-responsive table-hover table-striped display" width="100%" cellspacing="1">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Fecha Creación
+                </th>
+                <th>
+                   Estado
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                foreach (var term in Model)
+                {
+                    <tr style="@(term.Eliminado == true ? "background-color:#FAE6E9" : "")">
+                        <td>@Html.DisplayFor(modelItem => term.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Descripcion)</td>
+                        <td>@Html.DisplayFor(modelItem => term.FechaModificacion)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Estado)</td>
+                        <td align="right">
+                            @if (!term.Eliminado)
+                            {
+                                <button type="button" class="btn btn-info btn-sm" title="Modificar" onclick="location.href='@Url.Action("Edit", "GrupoUsuario", new { id = term.Id }) '">
+                                    <span class="fa fa-pencil">&nbsp;</span>
+                                </button>
+                                <button type="button" class="btn btn-warning btn-sm" title="Modificar" onclick="location.href='@Url.Action("GrupoPermiso", "GrupoUsuario", new { id = term.Id }) '">
+                                    <span class="fa fa-lock">&nbsp;</span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick="location.href='@Url.Action("Delete", "GrupoUsuario", new { id = term.Id }) '">
+                                    <span class="fa fa-eraser">&nbsp;</span>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

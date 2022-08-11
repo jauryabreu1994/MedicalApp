@@ -1,0 +1,120 @@
+﻿@model MedicalApp.Models.DashBoard.DashBoard
+
+@{
+    ViewBag.Title = "DashBoard";
+    bool temp = true;
+}
+
+<div class="panel panel-container">
+    <div class="row">
+        <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+            <div class="panel panel-red panel-widget ">
+                <div class="row no-padding">
+                    <em class="fa fa-xl fa-user-md color-red"></em>
+                    <div class="large">@Model.Cant_Consultas.ToString("###0")</div>
+                    <div class="text-muted">Consultas</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+            <div class="panel panel-orange panel-widget border-right">
+                <div class="row no-padding">
+                    <em class="fa fa-xl fa-stethoscope color-teal"></em>
+                    <div class="large">@Model.Cant_VerificacionAnalisis.ToString("###0")</div>
+                    <div class="text-muted">Verificacion Analisis</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+            <div class="panel panel-blue panel-widget border-right">
+                <div class="row no-padding">
+                    <em class="fa fa-xl fa-phone color-orange"></em>
+                    <div class="large">@Model.Cant_PendientePorConfirmar.ToString("###0")</div>
+                    <div class="text-muted">Pendiente Confirmacion</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+            <div class="panel panel-teal panel-widget border-right">
+                <div class="row no-padding">
+                    <em class="fa fa-xl fa-calendar color-blue"></em>
+                    <div class="large">@Model.Cant_Citas.ToString("###0")</div>
+                    <div class="text-muted">Citas</div>
+                </div>
+            </div>
+        </div>
+    </div><!--/.row-->
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="panel panel-default chat">
+            <div class="panel-heading">
+                Citas Pendientes por confirmar
+
+            </div>
+            <div class="panel-body">
+                <ul>
+
+                    @foreach (var term in Model.Citas)
+                    {
+
+                        if (temp)
+                        {
+                            temp = false;
+
+                            <li class="left clearfix">
+                                <span class="chat-img pull-left">
+                                    <img src="~/Content/img/send-message.png" alt="User Avatar" class="img-circle" />
+                                </span>
+                                <div class="chat-body clearfix">
+                                    <div class="header">
+                                        <strong class="primary-font">
+                                            @string.Format("{0} {1}", @Html.DisplayFor(modelItem => term._Cliente.Nombre), @Html.DisplayFor(modelItem => term._Cliente.Apellido))
+                                        </strong> <small class="text-muted"> @Html.DisplayFor(modelItem => term.FechaCreacion)</small>
+                                    </div>
+                                    <p> @Html.DisplayFor(modelItem => term.Comentario)</p>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            temp = true;
+                            <li class="right clearfix">
+                                <span class="chat-img pull-right">
+                                    <img src="~/Content/img/send-message.png" alt="User Avatar" class="img-circle" />
+                                </span>
+                                <div class="chat-body clearfix">
+                                    <div class="header">
+                                        <strong class="primary-font">
+                                            @string.Format("{0} {1}", @Html.DisplayFor(modelItem => term._Cliente.Nombre), @Html.DisplayFor(modelItem => term._Cliente.Apellido))
+                                        </strong> <small class="text-muted"> @Html.DisplayFor(modelItem => term.FechaCreacion)</small>
+                                    </div>
+                                    <p> @Html.DisplayFor(modelItem => term.Comentario)</p>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div><!--/.col-->
+
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Pacientes Atendidos
+
+                <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
+            </div>
+            <div class="panel-body">
+                <div class="canvas-wrapper">
+                    <canvas class="chart" id="pie-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!--/.row-->

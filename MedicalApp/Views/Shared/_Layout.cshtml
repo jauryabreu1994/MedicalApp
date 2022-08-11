@@ -1,0 +1,521 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/Content/img/medical-icon.png">
+    <link rel="icon" type="image/png" href="~/Content/img/medical-icon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        @ViewBag.Title
+    </title>
+
+    <link href="/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/Content/css/datepicker3.css" rel="stylesheet" />
+    <link href="/Content/css/styles.css" rel="stylesheet" />
+    <!--Custom Font-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 30px;
+            height: 20px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 16px;
+                width: 16px;
+                left: 2px;
+                bottom: 2px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(10px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+            .slider.round:before {
+                border-radius: 50%;
+            }
+    </style>
+
+
+</head>
+<body>
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@Url.Action("Index", "DashBoard")"><span>Hospital Morillo King</span></a>
+
+
+
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <em class="fa fa-cog"></em>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if ((Session["PermisosId"] as int[]).Contains(8))
+                            {
+                                <li>
+                                    <a class="" href="@Url.Action("Edit", "Usuario")">
+                                        <span class="fa fa-user">&nbsp;</span> Perfil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="" href="@Url.Action("Edit", "UsuarioContrasena")">
+                                        <span class="fa fa-lock">&nbsp;</span> Contrase&ntilde;a
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                            }
+                            <li>
+                                <a class="" href="@Url.Action("Salir", "Login")">
+                                    <span class="fa fa-power-off">&nbsp;</span> Salir
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+
+            </div>
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+        <div class="profile-sidebar">
+            <div class="profile-userpic">
+                <img src="~/Content/img/medical-logo.png" class="img-responsive" alt="" style="max-height: 50px;">
+            </div>
+            <div class="profile-usertitle">
+                <div class="profile-usertitle-name"> @((Session["UserName"] == null) ? "Desconocido" : Session["UserName"].ToString())</div>
+                <div class="profile-usertitle-status"> @((Session["GrupoUsuario"] == null) ? "General" : Session["GrupoUsuario"].ToString())</div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="divider"></div>
+        <ul class="nav menu">
+            <li class="active"><a href="@Url.Action("Index", "DashBoard")"><em class="fa fa-dashboard">&nbsp;</em> Inicio</a></li>
+            @if ((Session["PermisosId"] as int[]).Contains(3))
+            {
+                <li class="parent ">
+                    <a data-toggle="collapse" href="#services">
+                        <em class="fa fa-archive">&nbsp;</em> Productos y Servicios <span data-toggle="collapse" href="#services" class="icon pull-right"><em class="fa fa-plus"></em></span>
+                    </a>
+                    <ul class="children collapse" id="services">
+                        <li>
+                            <a class="" href="@Url.Action("Create", "Producto")">
+                                <span class="fa fa-product-hunt">&nbsp;</span> Nuevo Producto
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="@Url.Action("Index", "Producto")">
+                                <span class="fa fa-list">&nbsp;</span> Listado de Productos
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="@Url.Action("Create", "Servicio")">
+                                <span class="fa fa-plus">&nbsp;</span> Nuevo Servicio
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="@Url.Action("Index", "Servicio")">
+                                <span class="fa fa-address-book">&nbsp;</span> Listado de Servicio
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            @if ((Session["PermisosId"] as int[]).Contains(4))
+            {
+                <li class="parent ">
+                    <a data-toggle="collapse" href="#customer">
+                        <em class="fa fa-user">&nbsp;</em> Pacientes <span data-toggle="collapse" href="#customer" class="icon pull-right"><em class="fa fa-plus"></em></span>
+                    </a>
+                    <ul class="children collapse" id="customer">
+                        <li>
+                            <a class="" href="@Url.Action("Create", "Cliente")">
+                                <span class="fa fa-user-plus">&nbsp;</span> Crear
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="@Url.Action("Index", "Cliente")">
+                                <span class="fa fa-address-book">&nbsp;</span> Listado
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            @if ((Session["PermisosId"] as int[]).Contains(7))
+            {
+                <li class="parent ">
+                    <a data-toggle="collapse" href="#citas">
+                        <em class="fa fa-calendar">&nbsp;</em> Citas <span data-toggle="collapse" href="#citas" class="icon pull-right"><em class="fa fa-plus"></em></span>
+                    </a>
+                    <ul class="children collapse" id="citas">
+                        <li>
+                            <a class="" href="@Url.Action("Create", "Cita")">
+                                <span class="fa fa-cart-plus">&nbsp;</span> Crear
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="@Url.Action("Index", "Cita")">
+                                <span class="fa fa-list">&nbsp;</span> Listado
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="@Url.Action("Pacientes", "Cita")">
+                                <span class="fa fa-users">&nbsp;</span> Citas del Día
+                            </a>
+                        </li>
+                        <!--<li>
+                    <a class="" href="@Url.Action("Reporte", "Cita")">
+                        <span class="fa fa-file">&nbsp;</span> Reporte
+                    </a>
+                </li>-->
+                    </ul>
+                </li>
+            }
+            @if ((Session["PermisosId"] as int[]).Contains(25))
+            {
+                <li class="parent ">
+                    <a data-toggle="collapse" href="#emergency">
+                        <em class="fa fa-ambulance">&nbsp;</em> Habitación <span data-toggle="collapse" href="#emergency" class="icon pull-right"><em class="fa fa-plus"></em></span>
+                    </a>
+                    <ul class="children collapse" id="emergency">
+                        <li>
+                            <a class="" href="@Url.Action("Create", "HabitacionCliente")">
+                                <span class="fa fa-bed">&nbsp;</span> Asignar
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="@Url.Action("Index", "HabitacionCliente")">
+                                <span class="fa fa-list">&nbsp;</span> Listado
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="@Url.Action("Reporte", "HabitacionCliente")">
+                                <span class="fa fa-file">&nbsp;</span> Reporte
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            @if ((Session["PermisosId"] as int[]).Contains(25))
+            {
+                <!--<li class="parent ">
+            <a data-toggle="collapse" href="#invoice">
+                <em class="fa fa-print">&nbsp;</em> Facturacion <span data-toggle="collapse" href="#invoice" class="icon pull-right"><em class="fa fa-plus"></em></span>
+            </a>
+            <ul class="children collapse" id="invoice">
+                <li>
+                    <a class="" href="@Url.Action("Factura", "Transaccion")">
+                        <span class="fa fa-credit-card">&nbsp;</span> Factura
+                    </a>
+                </li>
+                <li>
+                    <a class="" href="@Url.Action("CuentaxPagar", "Transaccion")">
+                        <span class="fa fa-address-book">&nbsp;</span> Cuentas por Pagar
+                    </a>
+                </li>
+            </ul>
+        </li>-->
+            }
+            @if ((Session["PermisosId"] as int[]).Contains(2))
+            {
+                <li class="parent ">
+                    <a data-toggle="collapse" href="#user">
+                        <em class="fa fa-user-md">&nbsp;</em> Usuarios <span data-toggle="collapse" href="#user" class="icon pull-right"><em class="fa fa-plus"></em></span>
+                    </a>
+                    <ul class="children collapse" id="user">
+                        <li>
+                            <a class="" href="@Url.Action("Create", "Usuario")">
+                                <span class="fa fa-user-plus">&nbsp;</span> Crear
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="@Url.Action("Index", "Usuario")">
+                                <span class="fa fa-address-book">&nbsp;</span> Listado
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="@Url.Action("Index", "GrupoUsuario")">
+                                <span class="fa fa-users">&nbsp;</span> Grupos
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="@Url.Action("Index", "Permiso")">
+                                <span class="fa fa-key">&nbsp;</span> Permisos
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="@Url.Action("Index", "AreaGeneral")">
+                                <span class="fa fa-circle">&nbsp;</span> Perfil: Área General
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="@Url.Action("Index", "AreaEspecialidad")">
+                                <span class="fa fa-square">&nbsp;</span> Perfil: Área de Especialidad
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            @if ((Session["PermisosId"] as int[]).Contains(25))
+            {
+                <!--<li><a href=@Url.Action("Index", "Reporte")><em class="fa fa-bar-chart">&nbsp;</em> Reportes</a></li>-->
+
+                <li class="parent ">
+                    <a data-toggle="collapse" href="#setting">
+                        <em class="fa fa-gear">&nbsp;</em> Configuración <span data-toggle="collapse" href="#setting" class="icon pull-right"><em class="fa fa-plus"></em></span>
+                    </a>
+                    <ul class="children collapse" id="setting">
+                        <li>
+                            <a class="" href="@Url.Action("Edit", "Empresa")">
+                                <span class="fa fa-file">&nbsp;</span> Empresa
+                            </a>
+                        </li>
+                        <!--<li>
+                    <a class="" href="@Url.Action("Index", "Pago")">
+                        <span class="fa fa-money">&nbsp;</span> Medio de Pago
+                    </a>
+                </li>-->
+                        <li>
+                            <a class="" href="@Url.Action("Index", "Impuesto")">
+                                <span class="fa fa-tag">&nbsp;</span> Impuesto
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" href="@Url.Action("Index", "Edificio")">
+                                <span class="fa fa-hospital-o">&nbsp;</span> Edificio
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="" href="@Url.Action("Index", "EdificioNivel")">
+                                <span class="fa fa-columns">&nbsp;</span> Nivel de Edificio
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="" href="@Url.Action("Index", "Habitacion")">
+                                <span class="fa fa-bed">&nbsp;</span> Habitación
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+            <br />
+            <br />
+        </ul>
+        <footer class="page-footer" style="position: absolute; bottom: 0px;">
+
+            <p class="back-link">	&#169; 2022 Hospital Morillo King. <a href="#">Todos los derechos reservados</a></p>
+
+        </footer>
+    </div><!--/.sidebar-->
+
+
+    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#">
+                        <em class="fa fa-laptop"></em>
+                    </a>
+                </li>
+                <li class="active">@ViewBag.Title</li>
+            </ol>
+        </div><!--/.row-->
+        @Html.Partial("_Notifications")
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">@ViewBag.Title </h1>
+            </div>
+        </div><!--/.row-->
+
+        @RenderBody()
+
+
+    </div>	<!--/.main-->
+
+
+
+
+    <script src="/Content/js/jquery-1.11.1.min.js"></script>
+    <script src="/Content/js/bootstrap.min.js"></script>
+    <script src="/Content/js/chart.min.js"></script>
+    <script src="/Content/js/chart-data.js"></script>
+    <script src="/Content/js/easypiechart.js"></script>
+    <script src="/Content/js/easypiechart-data.js"></script>
+    <script src="/Content/js/bootstrap-datepicker.js"></script>
+    <script src="/Content/js/custom.js"></script>
+    @RenderSection("scripts", required: false)
+
+
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+
+        window.onload = function () {
+
+            let data = [
+                {
+                    value: 3,
+                    color: "#30a5ff",
+                    highlight: "#62b9fb",
+                    label: "Referidos"
+                },
+                {
+                    value: 5,
+                    color: "#ffb53e",
+                    highlight: "#fac878",
+                    label: "Cirugia"
+                },
+                {
+                    value: 10,
+                    color: "#1ebfae",
+                    highlight: "#3cdfce",
+                    label: "Seguimiento"
+                },
+                {
+                    value: 8,
+                    color: "#f9243f",
+                    highlight: "#f6495f",
+                    label: "Rutina"
+                }
+
+            ];
+            var chart4 = document.getElementById("pie-chart").getContext("2d");
+            window.myPie = new Chart(chart4).Pie(data, {
+                responsive: true,
+                segmentShowStroke: false
+            });
+        };
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('table.display').DataTable({
+
+                "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sSearch": "Buscar:",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    },
+                    "buttons": {
+                        "copy": "Copiar",
+                        "colvis": "Visibilidad"
+                    }
+                },
+                initComplete: function () {
+                    this.api().columns().every(function () {
+                        var column = this;
+                        var select = $('<select><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+                                //to select and search from grid
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+
+                        column.data().unique().sort().each(function (d, j) {
+                            select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    });
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel'
+                ]
+
+            });
+        });
+    </script>
+
+</body>
+
+
+</html>

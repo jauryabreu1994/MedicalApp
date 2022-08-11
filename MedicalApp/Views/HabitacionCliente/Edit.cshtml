@@ -1,0 +1,422 @@
+﻿@model MedicalApp.Models.Edificios.HabitacionCliente
+
+@{
+    ViewBag.Title = "Modificar Asignacion de Habitacion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    List<MedicalApp.Models.Edificios.Habitacion> habitaciones = ViewBag.Habitaciones as List<MedicalApp.Models.Edificios.Habitacion>;
+    List<MedicalApp.Models.Clientes.Cliente> clientes = ViewBag.Clientes as List<MedicalApp.Models.Clientes.Cliente>;
+    List<MedicalApp.Models.Usuarios.Usuario> doctores = ViewBag.Doctores as List<MedicalApp.Models.Usuarios.Usuario>;
+    List<MedicalApp.Models.Usuarios.Usuario> enfermeras = ViewBag.Enfermeras as List<MedicalApp.Models.Usuarios.Usuario>;
+    List<MedicalApp.Models.Usuarios.Usuario> cajeros = ViewBag.Cajeros as List<MedicalApp.Models.Usuarios.Usuario>;
+}
+
+<div class="panel panel-container ">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.FechaCreacion)
+            @Html.HiddenFor(model => model.FechaModificacion, new { Value = DateTime.Now })
+            @Html.HiddenFor(model => model.Estado)
+            @Html.HiddenFor(model => model.Eliminado)
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Habitación*</label>
+                <div class="col-xs-8 col-sm-8 col-xs-8 col-sm-8 col-md-8">
+                    <input class="form-control text-box single-line" id="Habitacion" name="Habitacion" type="text" value="@ViewBag.Habitacion" readonly>
+                    <input class="form-control text-box single-line" id="HabitacionId" name="HabitacionId" type="hidden" value="@ViewBag.HabitacionId">
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1">
+                    <button type="button" class="btn btn-info btn-sm" title="Buscar Habitacion" style="height:45px" data-toggle="modal" data-target="#modalBuscarHabitacion">
+                        <span class="fa fa-search">&nbsp;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Paciente*</label>
+                <div class="col-xs-8 col-sm-8 col-xs-8 col-sm-8 col-md-8">
+                    <input class="form-control text-box single-line" id="Cliente" name="Cliente" type="text" value="@ViewBag.Cliente" readonly>
+                    <input class="form-control text-box single-line" id="ClienteId" name="ClienteId" type="hidden" value="@ViewBag.ClienteId">
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1">
+                    <button type="button" class="btn btn-info btn-sm" title="Buscar Cliente" style="height:45px" data-toggle="modal" data-target="#modalBuscarCliente">
+                        <span class="fa fa-search">&nbsp;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Doctor*</label>
+                <div class="col-xs-8 col-sm-8 col-xs-8 col-sm-8 col-md-8">
+                    <input class="form-control text-box single-line" id="Doctor" name="Doctor" type="text" value="@ViewBag.Doctor" readonly>
+                    <input class="form-control text-box single-line" id="DoctorId" name="DoctorId" type="hidden" value="@ViewBag.DoctorId">
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1">
+                    <button type="button" class="btn btn-info btn-sm" title="Buscar Doctor" style="height:45px" data-toggle="modal" data-target="#modalBuscarDoctor">
+                        <span class="fa fa-search">&nbsp;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Enfermera*</label>
+                <div class="col-xs-8 col-sm-8 col-xs-8 col-sm-8 col-md-8">
+                    <input class="form-control text-box single-line" id="Enfermera" name="Enfermera" type="text" value="@ViewBag.Enfermera" readonly>
+                    <input class="form-control text-box single-line" id="EnfermeraId" name="EnfermeraId" type="hidden" value="@ViewBag.EnfermeraId">
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1">
+                    <button type="button" class="btn btn-info btn-sm" title="Buscar Enfermera" style="height:45px" data-toggle="modal" data-target="#modalBuscarEnfermera">
+                        <span class="fa fa-search">&nbsp;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Cajero*</label>
+                <div class="col-xs-8 col-sm-8 col-xs-8 col-sm-8 col-md-8">
+                    <input class="form-control text-box single-line" id="Cajero" name="Cajero" type="text" value="@ViewBag.Cajero" readonly>
+                    <input class="form-control text-box single-line" id="CajeroId" name="CajeroId" type="hidden" value="@ViewBag.CajeroId">
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1">
+                    <button type="button" class="btn btn-info btn-sm" title="Buscar Cajero" style="height:45px" data-toggle="modal" data-target="#modalBuscarCajero">
+                        <span class="fa fa-search">&nbsp;</span>
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "HabitacionCliente") '" />
+                        <input type="submit" value="Guardar" class="btn btn-info" onclick="return confirm('¿Seguro que desea guardar la asignación de habitación?')" />
+                    </div>
+                </div>
+            </div><br />
+        </div>
+    }
+</div>
+
+<div class="modal fade" id="modalBuscarHabitacion" tabindex="-1" role="dialog" aria-labelledby="modalBuscarHabitacionLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 700px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title" id="modalBuscarHabitacionLabel">Buscar Habitacion</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row cont-filtros">
+                    <div class="table-responsive tabla-disponible">
+
+                        <table class="table display" id="dataTable" width="100%" cellspacing="0"
+                               data-order='[[ 0, "asc" ]]' data-page-length='5'>
+                            <thead>
+                                <tr>
+                                    <th>Habitacion</th>
+                                    <th>Disponible</th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (habitaciones.Count > 0)
+                                {
+                                    foreach (var term in habitaciones)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(IndexModel => term.CodigoHabitacion)</td>
+                                            <td>@Html.DisplayFor(IndexModel => term.MaximoClientes)</td>
+                                            <td>
+                                                <button value='@term.Id' type="submit" name="SeleccionarHabitacion" onclick="SeleccionarHabitacion('@Html.DisplayFor(IndexModel => term.CodigoHabitacion)',
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Id))"
+                                                        class="btn btn-sm btn-outline-dark shadow-sm">
+                                                    Seleccionar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalBuscarCliente" tabindex="-1" role="dialog" aria-labelledby="modalBuscarClienteLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 700px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title" id="modalBuscarClienteLabel">Buscar Paciente</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row cont-filtros">
+                    <div class="table-responsive tabla-disponible">
+
+                        <table class="table display" id="dataTable" width="100%" cellspacing="0"
+                               data-order='[[ 0, "asc" ]]' data-page-length='5'>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Cedula</th>
+                                    <th>Teléfono</th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (clientes.Count > 0)
+                                {
+                                    foreach (var term in clientes)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(IndexModel => term.Nombre)</td>
+                                            <td>@Html.DisplayFor(IndexModel => term.Apellido)</td>
+                                            <td>@Html.DisplayFor(IndexModel => term.Identificacion).ToString().Replace("-", "")</td>
+                                            <td>@Html.DisplayFor(IndexModel => term.Telefono).ToString().Replace("-", "")</td>
+                                            <td>
+                                                <button value='@term.Id' type="submit" name="SeleccionarCliente" onclick="SeleccionarCliente('@string.Format("{0} {1}",
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Nombre),
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Apellido))',
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Id))"
+                                                        class="btn btn-sm btn-outline-dark shadow-sm">
+                                                    Seleccionar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalBuscarDoctor" tabindex="-1" role="dialog" aria-labelledby="modalBuscarDoctorLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 700px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title" id="modalBuscarDoctorLabel">Buscar Doctor</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row cont-filtros">
+                    <div class="table-responsive tabla-disponible">
+
+                        <table class="table display" id="dataTable" width="100%" cellspacing="0"
+                               data-order='[[ 0, "asc" ]]' data-page-length='5'>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Especialidad</th>
+                                    <th>Teléfono</th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (doctores.Count > 0)
+                                {
+                                    foreach (var term in doctores)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(IndexModel => term.Nombre)</td>
+                                            <td>@Html.DisplayFor(IndexModel => term.Apellido)</td>
+                                            <td>@Html.DisplayFor(IndexModel => term._AreaEspecialidad.Descripcion).ToString().Replace("-", "")</td>
+                                            <td>@Html.DisplayFor(IndexModel => term.Telefono).ToString().Replace("-", "")</td>
+                                            <td>
+                                                <button value='@term.Id' type="submit" name="SeleccionarDoctor" onclick="SeleccionarDoctor('@string.Format("{0} {1}",
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Nombre),
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Apellido))',
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Id))"
+                                                        class="btn btn-sm btn-outline-dark shadow-sm">
+                                                    Seleccionar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalBuscarEnfermera" tabindex="-1" role="dialog" aria-labelledby="modalBuscarEnfermeraLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 700px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title" id="modalBuscarEnfermeraLabel">Buscar Enfermera</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row cont-filtros">
+                    <div class="table-responsive tabla-disponible">
+
+                        <table class="table display" id="dataTable" width="100%" cellspacing="0"
+                               data-order='[[ 0, "asc" ]]' data-page-length='5'>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Especialidad</th>
+                                    <th>Teléfono</th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (doctores.Count > 0)
+                                {
+                                    foreach (var term in enfermeras)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(IndexModel => term.Nombre)</td>
+                                            <td>@Html.DisplayFor(IndexModel => term.Apellido)</td>
+                                            <td>@Html.DisplayFor(IndexModel => term._AreaEspecialidad.Descripcion).ToString().Replace("-", "")</td>
+                                            <td>@Html.DisplayFor(IndexModel => term.Telefono).ToString().Replace("-", "")</td>
+                                            <td>
+                                                <button value='@term.Id' type="submit" name="SeleccionarEnfermera" onclick="SeleccionarEnfermera('@string.Format("{0} {1}",
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Nombre),
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Apellido))',
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Id))"
+                                                        class="btn btn-sm btn-outline-dark shadow-sm">
+                                                    Seleccionar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalBuscarCajero" tabindex="-1" role="dialog" aria-labelledby="modalBuscarCajeroLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 700px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title" id="modalBuscarCajeroLabel">Buscar Cajero</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row cont-filtros">
+                    <div class="table-responsive tabla-disponible">
+
+                        <table class="table display" id="dataTable" width="100%" cellspacing="0"
+                               data-order='[[ 0, "asc" ]]' data-page-length='5'>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Área</th>
+                                    <th>Teléfono</th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (doctores.Count > 0)
+                                {
+                                    foreach (var term in cajeros)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(IndexModel => term.Nombre)</td>
+                                            <td>@Html.DisplayFor(IndexModel => term.Apellido)</td>
+                                            <td>@Html.DisplayFor(IndexModel => term._AreaEspecialidad.Descripcion).ToString().Replace("-", "")</td>
+                                            <td>@Html.DisplayFor(IndexModel => term.Telefono).ToString().Replace("-", "")</td>
+                                            <td>
+                                                <button value='@term.Id' type="submit" name="SeleccionarCajero" onclick="SeleccionarCajero('@string.Format("{0} {1}",
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Nombre),
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Apellido))',
+                                                                                                                                      @Html.DisplayFor(IndexModel => term.Id))"
+                                                        class="btn btn-sm btn-outline-dark shadow-sm">
+                                                    Seleccionar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    function SeleccionarHabitacion(name, id) {
+        document.getElementById("Habitacion").value = name;
+        document.getElementById("HabitacionId").value = id;
+        $('#modalBuscarHabitacion').modal('hide');
+        $("#modalBuscarHabitacion .close").click();
+    }
+
+    function SeleccionarCliente(name, id) {
+        document.getElementById("Cliente").value = name;
+        document.getElementById("ClienteId").value = id;
+        $('#modalBuscarCliente').modal('hide');
+        $("#modalBuscarCliente .close").click();
+    }
+
+    function SeleccionarDoctor(name, id) {
+        document.getElementById("Doctor").value = name;
+        document.getElementById("DoctorId").value = id;
+        $('#modalBuscarDoctor').modal('hide');
+        $("#modalBuscarDoctor .close").click();
+    }
+
+    function SeleccionarEnfermera(name, id) {
+        document.getElementById("Enfermera").value = name;
+        document.getElementById("EnfermeraId").value = id;
+        $('#modalBuscarEnfermera').modal('hide');
+        $("#modalBuscarEnfermera .close").click();
+    }
+
+    function SeleccionarCajero(name, id) {
+        document.getElementById("Cajero").value = name;
+        document.getElementById("CajeroId").value = id;
+        $('#modalBuscarCajero').modal('hide');
+        $("#modalBuscarCajero .close").click();
+    }
+</script>
+

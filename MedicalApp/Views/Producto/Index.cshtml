@@ -1,0 +1,73 @@
+﻿@model IEnumerable<MedicalApp.Models.Productos.Producto>
+
+@{
+    ViewBag.Title = "Listado de Productos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-container ">
+    <button type="button" class="btn btn-primary btn-sm" title="Agregar Nuevo Producto"
+            style="float: right; margin-top: -15px; margin-right: 5px; padding: 5px 15px 5px 10px;"
+            onclick="location.href='@Url.Action("Create", "Producto")'">
+        <span class="fa fa-plus">&nbsp;</span> Agregar Nuevo Producto
+    </button>
+    <hr />
+    <table class="table-responsive table-hover table-striped display" width="100%" cellspacing="1">
+        <thead>
+            <tr>
+                <th>
+                    Código
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Costo
+                </th>
+                <th>
+                    Impuesto
+                </th>
+                <th>
+                    Venta
+                </th>
+                <th>
+                    Fecha
+                </th>
+                <th>
+                   Estado
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                foreach (var term in Model)
+                {
+                    <tr style="@(term.Eliminado == true ? "background-color:#FAE6E9" : "")">
+                        <td>@Html.DisplayFor(modelItem => term.ProductoId)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Descripcion)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Costo)</td>
+                        <td>@Html.DisplayFor(modelItem => term._Impuesto.Monto)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Venta)</td>
+                        <td>@Html.DisplayFor(modelItem => term.FechaModificacion)</td>
+                        <td>@Html.DisplayFor(modelItem => term.Estado)</td>
+                        <td align="right">
+
+                            @if (!term.Eliminado)
+                            {
+                                <button type="button" class="btn btn-info btn-sm" title="Modificar" onclick="location.href='@Url.Action("Edit", "Producto", new { id = term.Id }) '">
+                                    <span class="fa fa-pencil">&nbsp;</span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick="location.href='@Url.Action("Delete", "Producto", new { id = term.Id }) '">
+                                    <span class="fa fa-eraser">&nbsp;</span>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
