@@ -133,13 +133,35 @@ namespace MedicalApp.Controllers.Productos
                 return RedirectToAction("Index", "HabitacionCliente");
             }
 
+
             ProductoCliente productoCliente = await db.ProductoCliente.FindAsync(id);
             productoCliente.FechaModificacion = DateTime.Now;
             productoCliente.Estado = Models.Enums.EstadoEnum.Completa;
+            int HabitacionClienteId = productoCliente.HabitacionClienteId;
             db.Entry(productoCliente).State = EntityState.Modified;
             await db.SaveChangesAsync();
             this.AddNotification("Medicamento Aplicado", NotificationType.SUCCESS);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "ProductoCliente", new { id = HabitacionClienteId });
+        }
+
+        public async Task<ActionResult> Delete(int? id)
+        {
+            if (!new GenericController().hasAccess(Models.Enums.PermisoEnum.Internamiento, Session))
+            {
+                this.AddNotification("No posees permisos para aplicar medicamentos al pacientes", NotificationType.WARNING);
+                return RedirectToAction("Index", "HabitacionCliente");
+            }
+
+
+            ProductoCliente productoCliente = await db.ProductoCliente.FindAsync(id);
+            productoCliente.FechaModificacion = DateTime.Now;
+            productoCliente.Estado = Models.Enums.EstadoEnum.Inactivo;
+            productoCliente.Eliminado = true;
+            int HabitacionClienteId = productoCliente.HabitacionClienteId;
+            db.Entry(productoCliente).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            this.AddNotification("Medicamento Aplicado", NotificationType.SUCCESS);
+            return RedirectToAction("Index", "ProductoCliente", new { id = HabitacionClienteId });
         }
 
         protected override void Dispose(bool disposing)

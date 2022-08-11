@@ -76,7 +76,8 @@ namespace MedicalApp.Controllers.Citas
             
             var paciente = await db.Cliente.FindAsync(cita.ClienteId);
             var clienteHistorial = db.ClienteHistorial.Where(a => a.UsuarioId == cita._Usuario.Id && !a.Eliminado).OrderByDescending(a=>a.FechaCreacion).Take(3).ToList();
-
+            
+            ViewBag.CitaId = id;
             ViewBag.Cita = cita;
             ViewBag.ClienteHistorial = clienteHistorial;
             ViewBag.Cliente = paciente;
@@ -85,8 +86,9 @@ namespace MedicalApp.Controllers.Citas
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Paciente([Bind(Include = "Id,ClienteId,UsuarioId,Documentacion,Indicaciones,FechaCreacion,FechaModificacion,Estado,Eliminado")] ClienteHistorial clienteHistorial)
+        public async Task<ActionResult> Paciente([Bind(Include = "Id,ClienteId,UsuarioId,Documentacion,Indicaciones,FechaCreacion,FechaModificacion,Estado,Eliminado")] ClienteHistorial clienteHistorial, int CitaId)
         {
+            DateTime fecha = DateTime.Now.Date;
             if (ModelState.IsValid)
             {
                 int UserID = Convert.ToInt32(new Encriptar_DesEncriptar().DesEncriptar(Session["UserID"].ToString()));
@@ -94,12 +96,11 @@ namespace MedicalApp.Controllers.Citas
                 db.ClienteHistorial.Add(clienteHistorial);
                 await db.SaveChangesAsync();
                 this.AddNotification("Historial de Paciente registrado exitosamente.", NotificationType.SUCCESS);
-                var Cita = await db.Cita.FirstAsync(a => a.UsuarioId == clienteHistorial.UsuarioId && a.FechaCita.Date == DateTime.Now.Date && 
-                                                         a.Estado != EstadoCitaEnum.Completada && !a.Eliminado);
-                return RedirectToAction("Complete", "Cita", new { id = Cita.Id });
+                
+                return RedirectToAction("Complete", "Cita", new { id = CitaId });
             }
 
-            var cita = await db.Cita.FirstAsync(a=>a.UsuarioId == clienteHistorial.UsuarioId && a.FechaCita.Date == DateTime.Now.Date);
+            var cita = await db.Cita.FindAsync(CitaId);
             var paciente = await db.Cliente.FindAsync(cita.ClienteId);
             var clienteHistoriales = db.ClienteHistorial.Where(a => a.UsuarioId == cita._Usuario.Id && !a.Eliminado).ToList();
 

@@ -107,14 +107,14 @@
                         <ul class="dropdown-menu">
                             @if ((Session["PermisosId"] as int[]).Contains(8))
                             {
-                                <li>
+                                <!--<li>
                                     <a class="" href="@Url.Action("Edit", "Usuario")">
                                         <span class="fa fa-user">&nbsp;</span> Perfil
                                     </a>
-                                </li>
+                                </li>-->
                                 <li>
                                     <a class="" href="@Url.Action("Edit", "UsuarioContrasena")">
-                                        <span class="fa fa-lock">&nbsp;</span> Contrase&ntilde;a
+                                        <span class="fa fa-lock">&nbsp;</span> Cambiar Contrase&ntilde;a
                                     </a>
                                 </li>
                                 <li class="divider"></li>
@@ -227,7 +227,7 @@
                     </ul>
                 </li>
             }
-            @if ((Session["PermisosId"] as int[]).Contains(25))
+            @if ((Session["PermisosId"] as int[]).Contains(6))
             {
                 <li class="parent ">
                     <a data-toggle="collapse" href="#emergency">
@@ -312,7 +312,7 @@
                     </ul>
                 </li>
             }
-            @if ((Session["PermisosId"] as int[]).Contains(25))
+            @if ((Session["PermisosId"] as int[]).Contains(1))
             {
                 <!--<li><a href=@Url.Action("Index", "Reporte")><em class="fa fa-bar-chart">&nbsp;</em> Reportes</a></li>-->
 

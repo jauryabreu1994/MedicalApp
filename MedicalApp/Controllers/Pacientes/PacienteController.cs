@@ -310,7 +310,7 @@ namespace MedicalApp.Controllers.Pacientes
                 Estado = Models.Enums.EstadoCitaEnum.Pendiente,
                 Eliminado = false
             };
-            if (!string.IsNullOrEmpty(Comentario) && DateTime.Now > cita.FechaCita)
+            if (!string.IsNullOrEmpty(Comentario) && DateTime.Now <= cita.FechaCita)
             {
                 if (ModelState.IsValid)
                 {

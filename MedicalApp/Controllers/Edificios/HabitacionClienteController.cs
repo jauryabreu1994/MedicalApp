@@ -208,7 +208,8 @@ namespace MedicalApp.Controllers.Edificios
                 int cantidad = habitacionesEnUso.Where(a => a.HabitacionId == hab.Id).Count();
                 hab.MaximoClientes = (cantidad >= hab.MaximoClientes) ? 0 : hab.MaximoClientes - cantidad;
 
-                habitacionesList.Add(hab);
+                if(hab.MaximoClientes > 0)
+                    habitacionesList.Add(hab);
             }
 
             ViewBag.Habitaciones = habitacionesList;

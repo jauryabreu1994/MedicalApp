@@ -12,6 +12,7 @@ using MedicalApp.Controllers.Empresa;
 using System;
 using MedicalApp.Extensions;
 using MedicalApp.Models.Enums;
+using System.Text.RegularExpressions;
 
 namespace MedicalApp.Controllers.Clientes
 {
@@ -93,11 +94,13 @@ namespace MedicalApp.Controllers.Clientes
                 cliente = db.Cliente.Add(cliente);
 
                 await db.SaveChangesAsync();
+                Regex reg = new Regex("[*'\",_&#^@]");
+                string Identificacion = reg.Replace(cliente.Identificacion, string.Empty);
                 ClienteContrasena clienteContrasena = new ClienteContrasena()
                 {
                     Id = 0,
                     ClienteId = cliente.Id,
-                    Contraseña = new Encriptar_DesEncriptar().Encriptar(cliente.Identificacion),
+                    Contraseña = new Encriptar_DesEncriptar().Encriptar(Identificacion),
                     FechaModificacion = DateTime.Now,
                     FechaCreacion = DateTime.Now,
                     Eliminado = false,
