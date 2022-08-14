@@ -27,7 +27,7 @@ namespace MedicalApp.Controllers.Usuarios
             }
             var usuario = db.Usuario.Include(u => u._AreaEspecialidad).Include(u => u._Ciudad).Include(u => u._Empresa).Include(u => u._GrupoUsuario).Include(u => u._Pais);
             ViewBag.ListGroup = db.GrupoUsuario.ToList();
-            return View(usuario.ToList());
+            return View(usuario.OrderBy(a => a.Nombre).ToList());
         }
 
         public ActionResult Filter(int groupId = 1)
@@ -105,7 +105,10 @@ namespace MedicalApp.Controllers.Usuarios
                     
                     usuario.UsuarioId = new EmpresaController().GenerateNumber(true, companyEnum).Item1; 
                 }
-                
+
+                usuario.Identificacion = new GenericController().SetFormatVatNumber(usuario.Identificacion);
+                usuario.Telefono = new GenericController().SetFormatPhoneNumer(usuario.Telefono);
+
                 usuario.FechaModificacion = DateTime.Now;
                 usuario.FechaCreacion = DateTime.Now;
                 db.Usuario.Add(usuario);
@@ -175,6 +178,8 @@ namespace MedicalApp.Controllers.Usuarios
         {
             if (ModelState.IsValid)
             {
+                usuario.Identificacion = new GenericController().SetFormatVatNumber(usuario.Identificacion);
+                usuario.Telefono = new GenericController().SetFormatPhoneNumer(usuario.Telefono);
                 usuario.FechaModificacion = DateTime.Now;
                 db.Entry(usuario).State = EntityState.Modified;
                 db.SaveChanges();

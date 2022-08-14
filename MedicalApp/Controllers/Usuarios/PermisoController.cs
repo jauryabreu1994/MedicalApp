@@ -25,7 +25,7 @@ namespace MedicalApp.Controllers.Usuarios
                 this.AddNotification("No posees permisos para el Listado de Permisos.", NotificationType.WARNING);
                 return RedirectToAction("Index", "DashBoard");
             }
-            return View(await db.Permiso.ToListAsync());
+            return View(await db.Permiso.OrderBy(a => a.Descripcion).ToListAsync());
         }
 
         // GET: Permisoes/Create

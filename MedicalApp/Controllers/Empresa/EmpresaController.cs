@@ -122,7 +122,7 @@ namespace MedicalApp.Controllers.Empresa
                 db.Entry(empresa).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 this.AddNotification("Empresa modificada exitosamente.", NotificationType.SUCCESS);
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit");
             }
             ViewBag.CiudadId = new SelectList(db.Ciudad, "Id", "Descripcion", empresa.CiudadId);
             ViewBag.PaisId = new SelectList(db.Pais, "Id", "CodigoArea", empresa.PaisId); 

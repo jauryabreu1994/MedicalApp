@@ -26,7 +26,7 @@ namespace MedicalApp.Controllers.Edificios
                 return RedirectToAction("Index", "DashBoard");
             }
             var habitacion = db.Habitacion.Include(h => h._EdificioNivel);
-            return View(await habitacion.ToListAsync());
+            return View(await habitacion.OrderBy(a => a.CodigoHabitacion).ToListAsync());
         }
 
         // GET: Habitacion/Create

@@ -100,11 +100,12 @@ namespace MedicalApp.Controllers.Pacientes
                         Direccion = "",
                         CiudadId = 979,
                         PaisId = 1,
-                        Telefono = telefono,
+                        Telefono = new GenericController().SetFormatPhoneNumer(telefono),
                         Estado = EstadoEnum.Activo,
                         Eliminado = false,
                         FechaCreacion = DateTime.Now,
                         FechaModificacion = DateTime.Now,
+                        FechaNacimiento = DateTime.Now.Date,
                         Id = 0,
                         NombreFiscal = string.Format("{0} {1}", nombre, apellido)
                     };
@@ -480,7 +481,7 @@ namespace MedicalApp.Controllers.Pacientes
 
             ViewBag.Id = ClienteId;
             ViewBag.File = report;
-            return View(await clienteHistorial.ToListAsync());
+            return View(await clienteHistorial.OrderBy(a => a.FechaCreacion).ToListAsync());
         }
 
         public ActionResult Salir()
@@ -686,13 +687,13 @@ namespace MedicalApp.Controllers.Pacientes
             {
                 cliente.Nombre = Nombre;
                 cliente.Apellido = Apellido;
-                cliente.Identificacion = Identificacion;
+                //cliente.Identificacion = Identificacion;
                 cliente.NombreFiscal = NombreFiscal;
                 cliente.PaisId = PaisId;
                 cliente.CiudadId = CiudadId;
                 cliente.Direccion = Direccion;
                 cliente.Correo = Correo;
-                cliente.Telefono = Telefono;
+                cliente.Telefono = new GenericController().SetFormatPhoneNumer(Telefono);
                 cliente.Genero = (GeneroEnum)Genero;
                 cliente.FechaModificacion = DateTime.Now;
                 cliente.FechaNacimiento = FechaNacimiento;

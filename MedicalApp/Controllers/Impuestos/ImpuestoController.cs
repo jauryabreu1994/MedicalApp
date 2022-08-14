@@ -6,6 +6,7 @@ using MedicalApp.Context;
 using MedicalApp.Models.Impuestos;
 using System;
 using MedicalApp.Extensions;
+using System.Linq;
 
 namespace MedicalApp.Controllers.Impuestos
 {
@@ -21,7 +22,7 @@ namespace MedicalApp.Controllers.Impuestos
                 this.AddNotification("No posees permisos para el Listado de Impuestos.", NotificationType.WARNING);
                 return RedirectToAction("Index", "DashBoard");
             }
-            var impuesto = db.Impuesto.Include(i => i._Empresa);
+            var impuesto = db.Impuesto.OrderBy(a => a.Descripcion).Include(i => i._Empresa);
             return View(await impuesto.ToListAsync());
         }
 

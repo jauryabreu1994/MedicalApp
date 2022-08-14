@@ -33,7 +33,7 @@ namespace MedicalApp.Controllers.Productos
 
             var producto = db.Producto.Include(p => p._Empresa).Include(p => p._Impuesto);
 
-            var productoCliente = db.ProductoCliente.Where(a=>a.HabitacionClienteId == id).Include(p => p._HabitacionCliente).Include(p => p._Producto).ToList();
+            var productoCliente = db.ProductoCliente.Where(a=>a.HabitacionClienteId == id).OrderBy(a => a.FechaCreacion).Include(p => p._HabitacionCliente).Include(p => p._Producto).ToList();
             var cliente = db.HabitacionCliente.Find(id)._Cliente;
 
             ViewBag.HabitacionClienteId = id;

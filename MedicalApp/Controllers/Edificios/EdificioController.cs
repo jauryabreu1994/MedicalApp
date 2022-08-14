@@ -26,7 +26,7 @@ namespace MedicalApp.Controllers.Edificios
                 return RedirectToAction("Index", "DashBoard");
             }
             var edificio = db.Edificio.Include(e => e._Empresa);
-            return View(await edificio.ToListAsync());
+            return View(await edificio.OrderBy(a => a.Descripcion).ToListAsync());
         }
 
         // GET: Edificio/Create

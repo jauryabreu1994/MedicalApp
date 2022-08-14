@@ -29,7 +29,7 @@ namespace MedicalApp.Controllers.Clientes
                 return RedirectToAction("Index", "DashBoard");
             }
             var cliente = db.Cliente.Include(c => c._Ciudad).Include(c => c._Pais);
-            return View(await cliente.ToListAsync());
+            return View(await cliente.OrderBy(a => a.Nombre).ToListAsync());
         }
 
         public JsonResult Ciudad_Bind(int paisId)

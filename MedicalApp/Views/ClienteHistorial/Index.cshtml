@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<MedicalApp.Models.Clientes.ClienteHistorial>
 
 @{
-    ViewBag.Title = "Historial del Cliente: " + ViewBag.Cliente;
+    ViewBag.Title = "Historial del Paciente: " + ViewBag.Cliente;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="panel panel-container ">
-    <button type="button" class="btn btn-primary btn-sm" title="Agregar Nuevo Historial del Cliente"
+    <button type="button" class="btn btn-primary btn-sm" title="Agregar Nuevo Historial del Paciente"
             style="float: right; margin-top: -15px; margin-right: 5px; padding: 5px 15px 5px 10px;"
             onclick="location.href='@Url.Action("Create", "ClienteHistorial", new { id = ViewBag.Id })'">
-        <span class="fa fa-plus">&nbsp;</span> Agregar Nuevo Historial del Cliente
+        <span class="fa fa-plus">&nbsp;</span> Agregar Nuevo Historial del Paciente
     </button>
     <hr />
     <table class="table-responsive table-hover table-striped display" width="100%" cellspacing="1">

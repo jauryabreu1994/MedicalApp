@@ -28,7 +28,7 @@ namespace MedicalApp.Controllers.Clientes
             }
             var clienteDocumento = db.ClienteDocumento.Where(a => a.ClienteHistorialId == id).Include(c => c._ClienteHistorial);
             ViewBag.Id = id;
-            return View(await clienteDocumento.ToListAsync());
+            return View(await clienteDocumento.OrderBy(a => a.FechaCreacion).ToListAsync());
         }
 
         // GET: ClienteDocumento/Create
