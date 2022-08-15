@@ -23,7 +23,7 @@ namespace MedicalApp.Controllers
                 }
                 else if (VatNumber.Length == 11)
                 {
-                    VatNumber = Convert.ToInt64(new String(VatNumber.Where(Char.IsDigit).ToArray())).ToString("###-#######-#");
+                    VatNumber = Convert.ToInt64(new String(VatNumber.Where(Char.IsDigit).ToArray())).ToString("000-#######-#");
                 }
             }
 

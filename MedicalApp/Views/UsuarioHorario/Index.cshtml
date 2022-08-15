@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MedicalApp.Models.Usuarios.UsuarioHorario>
 
 @{
-    ViewBag.Title = "Listado de Horarios";
+    ViewBag.Title = "Listado de Horarios: " + @ViewBag.Nombre;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,7 +9,7 @@
     <button type="button" class="btn btn-primary btn-sm" title="Agregar Nuevo Horario"
             style="float: right; margin-top: -15px; margin-right: 5px; padding: 5px 15px 5px 10px;"
             onclick="location.href='@Url.Action("Create", "UsuarioHorario", new { UsuarioId = ViewBag.UsuarioId }) '">
-        <span class="fa fa-plus">&nbsp;</span> Agregar Nuevo Horario al Doctor @ViewBag.Nombre
+        <span class="fa fa-plus">&nbsp;</span> Agregar Nuevo Horario al Doctor
     </button>
     <hr />
     <table class="table-responsive table-hover table-striped display" width="100%" cellspacing="1">

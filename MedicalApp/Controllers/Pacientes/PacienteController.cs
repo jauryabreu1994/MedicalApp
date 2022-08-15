@@ -311,7 +311,15 @@ namespace MedicalApp.Controllers.Pacientes
                 Estado = Models.Enums.EstadoCitaEnum.Pendiente,
                 Eliminado = false
             };
-            if (!string.IsNullOrEmpty(Comentario) && DateTime.Now <= cita.FechaCita)
+
+            var citas = db.Cita.Where(a => !a.Eliminado && a.ClienteId == ClienteId && a.AreaEspecialidadId == AreaEspecialidadId && a.FechaCita > DateTime.Now).Include(a => a._Usuario).ToList();
+            if (citas.Count() > 0)
+            {
+                var c = citas.FirstOrDefault();
+                string notificacion = string.Format("Posees una cita para esta especialidad. Doctor/a: {0} {1}, en Fecha {2}", c._Usuario.Nombre, c._Usuario.Apellido, c.FechaCita);
+                this.AddNotification(notificacion, NotificationType.ERROR);
+            }
+            else if (!string.IsNullOrEmpty(Comentario) && DateTime.Now <= cita.FechaCita)
             {
                 if (ModelState.IsValid)
                 {
