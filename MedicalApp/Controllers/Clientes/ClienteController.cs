@@ -78,15 +78,18 @@ namespace MedicalApp.Controllers.Clientes
         {
             if (new GenericController().IdentificationExist(cliente.Identificacion, false)) 
             {
+
                 ViewBag.CiudadId = new SelectList(db.Ciudad, "Id", "Descripcion", cliente.CiudadId);
                 ViewBag.PaisId = new SelectList(db.Pais, "Id", "Descripcion", cliente.PaisId);
-                this.AddNotification("Existe un cliente con esta cedula", NotificationType.ERROR);
+                this.AddNotification("Existe un paciente con esta cedula", NotificationType.ERROR);
                 return View(cliente);
             }
             else if (ModelState.IsValid)
             {
                 cliente.ClienteId = new EmpresaController().GenerateNumber(true, Models.Enums.CompanyEnum.Cliente).Item1;
                 cliente.Identificacion = new GenericController().SetFormatVatNumber(cliente.Identificacion);
+                cliente.Telefono = new GenericController().SetFormatPhoneNumer(cliente.Telefono);
+
                 cliente.FechaModificacion = DateTime.Now;
                 cliente.FechaCreacion = DateTime.Now;
                 cliente.Direccion = string.IsNullOrEmpty(cliente.Direccion) ? string.Empty : cliente.Direccion;
@@ -151,6 +154,10 @@ namespace MedicalApp.Controllers.Clientes
         {
             if (ModelState.IsValid)
             {
+
+                cliente.Identificacion = new GenericController().SetFormatVatNumber(cliente.Identificacion);
+                cliente.Telefono = new GenericController().SetFormatPhoneNumer(cliente.Telefono);
+
                 cliente.NombreFiscal = string.IsNullOrEmpty(cliente.NombreFiscal) ? string.Format("{0} {1}", cliente.Nombre, cliente.Apellido) : cliente.NombreFiscal;
                 cliente.Direccion = string.IsNullOrEmpty(cliente.Direccion) ? string.Empty : cliente.Direccion;
                 cliente.FechaModificacion = DateTime.Now;

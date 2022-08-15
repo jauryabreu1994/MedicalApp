@@ -24,7 +24,6 @@
     </style>
 </head>
 <body>
-    @Html.Partial("_Notifications")
     <section class="ftco-section">
         <div class="container">
             <div class="row justify-content-center">
@@ -67,6 +66,8 @@
                                     <span style="color:crimson">@ViewBag.GeneralError</span>
                                     <button type="submit" class="form-control btn btn-primary rounded submit px-3">Iniciar</button>
                                 </div>
+
+                                <a class="small" style="margin:auto; text-align:center; display:block;" href="@Url.Action("Index", "Home")">Volver a la Pagina Principal</a>
                             }
                         </div>
                     </div>

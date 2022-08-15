@@ -68,13 +68,6 @@
                                     {
 
                                         <td style="text-align: center">
-                                            <a href="@Url.Action("Edit", "Paciente", new { id = term.Id })"
-                                               onclick="return confirm('¿Seguro que desea modificar esta Cita?')"
-                                               class="btn btn-warning">
-                                                <span class="icon">
-                                                    <i class="fas fa-pen"></i>
-                                                </span>
-                                            </a>
                                             <a href="@Url.Action("Delete", "Paciente", new { id = term.Id })"
                                                onclick="return confirm('¿Seguro que desea cancelar esta Cita?')"
                                                class="btn btn-danger">

@@ -77,10 +77,10 @@
                         <label>Fecha y Hora</label>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm-4 mb-2 mb-sm-2">
+                        <div class="col-sm-5 mb-2 mb-sm-2">
                             <input class="form-control text-box single-line" id="FechaId" name="FechaCita" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.AddMonths(3).ToString("yyyy-MM-dd")" step="1" value="@ViewBag.Fecha">
                         </div>
-                        <div class="col-sm-2 mb-2 mb-sm-2">
+                        <div class="col-sm-6 mb-2 mb-sm-2">
                             <select id="HoraId" name="Hora" class="form-control text-box single-line" value="@ViewBag.Hora"></select>
                         </div>
                     </div>

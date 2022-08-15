@@ -271,6 +271,8 @@ namespace MedicalApp.Controllers.Citas
             Cita cita = new Cita();
 
             var horario = await db.Horario.FirstAsync(a => a.Id == Hora);
+
+            
             cita = new Cita()
             {
                 Id = 0,
@@ -287,8 +289,14 @@ namespace MedicalApp.Controllers.Citas
                 Estado = Models.Enums.EstadoCitaEnum.Pendiente,
                 Eliminado = false
             };
-
-            if (!string.IsNullOrEmpty(Comentario) && DateTime.Now < cita.FechaCita)
+            var citas = db.Cita.Where(a => !a.Eliminado && a.ClienteId == ClienteId && a.AreaEspecialidadId == AreaEspecialidadId && a.FechaCita > DateTime.Now).Include(a=>a._Usuario).ToList();
+            if (citas.Count() > 0) 
+            {
+                var c = citas.FirstOrDefault();
+                string notificacion = string.Format("El cliente posee una cita para esta especialidad. Doctor/a: {0} {1}, en Fecha {2}", c._Usuario.Nombre, c._Usuario.Apellido, c.FechaCita);
+                this.AddNotification(notificacion, NotificationType.ERROR);
+            }
+            else if (!string.IsNullOrEmpty(Comentario) && DateTime.Now < cita.FechaCita)
             {
                 if (ModelState.IsValid)
                 {
@@ -332,7 +340,6 @@ namespace MedicalApp.Controllers.Citas
 
             ViewBag.Clientes = db.Cliente.Where(a => a.Estado == Models.Enums.EstadoEnum.Activo).ToList();
             ViewBag.AreaEspecialidades = db.AreaEspecialidad.Where(a => a.Estado == Models.Enums.EstadoEnum.Activo).Include(a => a._AreaGeneral).ToList();
-            this.AddNotification("Favor completar todos los campos", NotificationType.ERROR);
             return View();
         }
 

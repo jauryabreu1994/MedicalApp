@@ -25,7 +25,6 @@
     </style>
 </head>
 <body>
-    @Html.Partial("_Notifications")
     <section class="ftco-section">
         <div class="container">
             <div class="row justify-content-center">
@@ -47,19 +46,22 @@
 
 
                                 <div class="form-group mt-3">
-                                    <input type="text" class="form-control"  name="cliente" value="@ViewBag.cliente" autocomplete="off" required>
+                                    <input type="text" class="form-control" name="cliente" value="@ViewBag.cliente" autocomplete="off" required>
                                     <label class="form-control-placeholder" for="username">Cédula o Correo</label>
                                 </div>
                                 <div class="form-group">
-                                    <input id="password-field" type="password"  name="contrasena" class="form-control" autocomplete="off"  value="@ViewBag.contrasena" required>
-                                    <label class="form-control-placeholder"  for="password" >Contraseña</label>
+                                    <input id="password-field" type="password" name="contrasena" class="form-control" autocomplete="off" value="@ViewBag.contrasena" required>
+                                    <label class="form-control-placeholder" for="password">Contraseña</label>
                                     <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                 </div>
                                 <div class="form-group">
+
+                                    <span style="color:crimson">@ViewBag.Error</span>
                                     <button type="submit" style="background-color: #17a2b8; color:white" class="form-control btn btn-info rounded submit px-3">Iniciar</button>
                                 </div>
 
                                 <a class="small" style="margin:auto; text-align:center; display:block;" href="@Url.Action("Register", "Paciente")">Crear una Cuenta!</a>
+                                <a class="small" style="margin: auto; text-align: center; display: block; color: #17a2b8;" href="@Url.Action("Index", "Home")">Volver a la Pagina Principal</a>
                             }
                         </div>
                     </div>

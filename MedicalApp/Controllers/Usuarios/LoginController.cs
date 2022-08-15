@@ -69,7 +69,6 @@ namespace MedicalApp.Controllers.Usuarios
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.Message);
                 ViewBag.UserError = (ex.Message == "Sequence contains no elements") ? "Usuario o Correo incorrecto" : "";
                 ViewBag.GeneralError = (string.IsNullOrEmpty(ViewBag.UserError)) ? "Usuario y/o Contraseña incorrecto" : "";
             }

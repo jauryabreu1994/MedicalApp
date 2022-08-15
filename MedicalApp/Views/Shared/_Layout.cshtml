@@ -147,7 +147,7 @@
         <div class="divider"></div>
         <ul class="nav menu">
             <li class="active"><a href="@Url.Action("Index", "DashBoard")"><em class="fa fa-dashboard">&nbsp;</em> Inicio</a></li>
-            @if ((Session["PermisosId"] as int[]).Contains(3))
+            @if ((Session["PermisosId"] as int[]).Contains(25))
             {
                 <li class="parent ">
                     <a data-toggle="collapse" href="#services">
