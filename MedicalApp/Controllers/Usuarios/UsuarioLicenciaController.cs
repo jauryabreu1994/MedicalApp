@@ -34,7 +34,7 @@ namespace MedicalApp.Controllers.Usuarios
 
             var usuarioHorario = db.UsuarioLicencia.Where(a => a.UsuarioId == UsuarioId).Include(u => u._Usuario);
             ViewBag.UsuarioId = UsuarioId;
-            return View(await usuarioHorario.ToListAsync());
+            return View(await usuarioHorario.OrderBy(a => a.FechaLicencia).ToListAsync());
         }
 
         // GET: UsuarioLicencia/Create

@@ -14,27 +14,47 @@ namespace MedicalApp.Controllers
     {
         public string SetFormatVatNumber(string VatNumber)
         {
-
+            VatNumber = VatNumber.Replace(" ", "");
             if (new String(VatNumber.Where(Char.IsLetter).ToArray()).Length == 0)
             {
-                if (VatNumber.Length == 9)
+                if (VatNumber.Replace(" ", "").Length == 9)
                 {
                     VatNumber = Convert.ToInt64(new String(VatNumber.Where(Char.IsDigit).ToArray())).ToString("###-#####-#");
                 }
                 else if (VatNumber.Length == 11)
                 {
-                    VatNumber = Convert.ToInt64(new String(VatNumber.Where(Char.IsDigit).ToArray())).ToString("###-#######-#");
+                    VatNumber = Convert.ToInt64(new String(VatNumber.Where(Char.IsDigit).ToArray())).ToString("000-#######-#");
                 }
             }
 
             return VatNumber;
         }
 
+        public string SetFormatPhoneNumer(string Phone)
+        {
+            Regex reg = new Regex("[-*'\"(),_&#^@]");
+            Phone = reg.Replace(Phone.Replace(" ", string.Empty), string.Empty);
+
+            if (new String(Phone.Where(Char.IsLetter).ToArray()).Length == 0)
+            {
+                if (Phone.Length == 10)
+                {
+                    Phone = Convert.ToInt64(new String(Phone.Where(Char.IsDigit).ToArray())).ToString("(###) ### ####");
+                }
+                else if (Phone.Length == 11)
+                {
+                    Phone = Convert.ToInt64(new String(Phone.Where(Char.IsDigit).ToArray())).ToString("+# (###) ### ####");
+                }
+            }
+
+            return Phone;
+        }
+
         public bool IdentificationExist(string id, bool empleado = true) 
         {
             if (!string.IsNullOrEmpty(id)) 
             {
-                Regex reg = new Regex("[*'\",_&#^@]");
+                Regex reg = new Regex("[-*'\"(),_&#^@]");
                 id = reg.Replace(id, string.Empty);
 
                 id = SetFormatVatNumber(id);

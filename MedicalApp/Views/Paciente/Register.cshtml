@@ -7,7 +7,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Cliente Inicio de Sesión</title>
+    <title>Paciente Inicio de Sesión</title>
     <link rel="apple-touch-icon" sizes="76x76" href="~/Content/img/medical-icon.png">
     <link rel="icon" type="image/png" href="~/Content/img/medical-icon.png">
     <meta charset="utf-8">
@@ -25,7 +25,6 @@
     </style>
 </head>
 <body>
-    @Html.Partial("_Notifications")
     <section class="ftco-section">
         <div class="container">
             <div class="row justify-content-center">
@@ -79,7 +78,9 @@
                                 <div class="form-group mt-3">
                                     <input type="password" class="form-control" name="rcontrasena" value="@ViewBag.confirmarContrasena" autocomplete="off" placeholder="Repetir Contraseña" required>
                                 </div>
+
                                 <div class="form-group">
+                                    <center><span style="color:crimson">@ViewBag.Error</span></center>
                                     <button type="submit" style="background-color: #17a2b8; color:white" class="form-control btn btn-info rounded submit px-3">Registrarse</button>
                                 </div>
 

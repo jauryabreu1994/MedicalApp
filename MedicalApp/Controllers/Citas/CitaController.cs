@@ -62,7 +62,7 @@ namespace MedicalApp.Controllers.Citas
                     citas = db.Cita.Include(s => s._Empresa).Include(s => s._AreaEspecialidad).Include(s => s._Usuario).Include(s => s._Cliente).Where(a => !a.Eliminado).ToList();
                 }
             }
-            return View(citas);
+            return View(citas.OrderBy(a => a.FechaCita).ToList()); 
         }
         public async Task<ActionResult> Paciente(int id)
         {
@@ -116,45 +116,51 @@ namespace MedicalApp.Controllers.Citas
 
         public async Task<ActionResult> Pacientes()
         {
-
-            if (!new GenericController().hasAccess(Models.Enums.PermisoEnum.Citas, Session))
+            try
             {
-                this.AddNotification("No posees permisos para el Listado de Citas.", NotificationType.WARNING);
+                if (!new GenericController().hasAccess(Models.Enums.PermisoEnum.Citas, Session))
+                {
+                    this.AddNotification("No posees permisos para el Listado de Citas.", NotificationType.WARNING);
+                    return RedirectToAction("Index", "DashBoard");
+                }
+
+                int UsuarioId = Convert.ToInt32(encriptar_DesEncriptar.DesEncriptar(Session["UserID"].ToString()));
+                int GrupoUsuarioId = Convert.ToInt32(encriptar_DesEncriptar.DesEncriptar(Session["GrupoUsuarioId"].ToString()));
+                var usuario = await db.Usuario.FindAsync(UsuarioId);
+
+                List<Usuario> usuarios = new List<Usuario>();
+                if (GrupoUsuarioId == 5)
+                {
+                    var listadoDoctores = db.UsuarioAsociado.Where(a => a.AsistenteId == usuario.Id);
+
+                    foreach (var doctor in listadoDoctores)
+                        usuarios.Add(await db.Usuario.FindAsync(doctor.DoctorId));
+                }
+                else if (GrupoUsuarioId == 4)
+                    usuarios.Add(usuario);
+                else
+                {
+                    this.AddNotification("Este perfil no es Doctor/a o Asistente.", NotificationType.WARNING);
+                    return RedirectToAction("Index", "Cita");
+                }
+
+                List<Cita> citas = new List<Cita>();
+                foreach (var u in usuarios)
+                {
+                    var cs = db.Cita.Include(s => s._Empresa).Include(s => s._AreaEspecialidad)
+                                    .Include(s => s._Usuario).Include(s => s._Cliente).ToList()
+                                    .Where(a => a.FechaCita.Date == DateTime.Now.Date && a.UsuarioId == u.Id &&
+                                                a.Estado != EstadoCitaEnum.Completada &&
+                                                a.Estado != EstadoCitaEnum.PendientePago).ToList();
+                    foreach (var c in cs)
+                        citas.Add(c);
+                }
+                return View(citas);
+            }
+            catch {
+                this.AddNotification("Solo los medicos poseen aceeso a este panel.", NotificationType.WARNING);
                 return RedirectToAction("Index", "DashBoard");
             }
-
-            int UsuarioId = Convert.ToInt32(encriptar_DesEncriptar.DesEncriptar(Session["UserID"].ToString()));
-            int GrupoUsuarioId = Convert.ToInt32(encriptar_DesEncriptar.DesEncriptar(Session["GrupoUsuarioId"].ToString()));
-            var usuario = await db.Usuario.FindAsync(UsuarioId);
-
-            List<Usuario> usuarios = new List<Usuario>();
-            if (GrupoUsuarioId == 5)
-            {
-                var listadoDoctores = db.UsuarioAsociado.Where(a => a.AsistenteId == usuario.Id);
-
-                foreach (var doctor in listadoDoctores)
-                    usuarios.Add(await db.Usuario.FindAsync(doctor.DoctorId));
-            }
-            else if (GrupoUsuarioId == 4)
-                usuarios.Add(usuario);
-            else
-            {
-                this.AddNotification("Este perfil no es Doctor/a o Asistente.", NotificationType.WARNING);
-                return RedirectToAction("Index", "Cita");
-            }
-
-            List<Cita> citas = new List<Cita>();
-            foreach (var u in usuarios)
-            {
-                var cs = db.Cita.Include(s => s._Empresa).Include(s => s._AreaEspecialidad)
-                                .Include(s => s._Usuario).Include(s => s._Cliente).ToList()
-                                .Where(a => a.FechaCita.Date == DateTime.Now.Date && a.UsuarioId == u.Id && 
-                                            a.Estado != EstadoCitaEnum.Completada &&
-                                            a.Estado != EstadoCitaEnum.PendientePago).ToList();
-                foreach (var c in cs)
-                    citas.Add(c);
-            }
-            return View(citas);
         }
 
         public JsonResult Doctor_Bind(int areaEspecialidadId)
@@ -265,6 +271,8 @@ namespace MedicalApp.Controllers.Citas
             Cita cita = new Cita();
 
             var horario = await db.Horario.FirstAsync(a => a.Id == Hora);
+
+            
             cita = new Cita()
             {
                 Id = 0,
@@ -281,8 +289,14 @@ namespace MedicalApp.Controllers.Citas
                 Estado = Models.Enums.EstadoCitaEnum.Pendiente,
                 Eliminado = false
             };
-
-            if (!string.IsNullOrEmpty(Comentario) && DateTime.Now < cita.FechaCita)
+            var citas = db.Cita.Where(a => !a.Eliminado && a.ClienteId == ClienteId && a.AreaEspecialidadId == AreaEspecialidadId && a.FechaCita > DateTime.Now).Include(a=>a._Usuario).ToList();
+            if (citas.Count() > 0) 
+            {
+                var c = citas.FirstOrDefault();
+                string notificacion = string.Format("El cliente posee una cita para esta especialidad. Doctor/a: {0} {1}, en Fecha {2}", c._Usuario.Nombre, c._Usuario.Apellido, c.FechaCita);
+                this.AddNotification(notificacion, NotificationType.ERROR);
+            }
+            else if (!string.IsNullOrEmpty(Comentario) && DateTime.Now < cita.FechaCita)
             {
                 if (ModelState.IsValid)
                 {
@@ -326,7 +340,6 @@ namespace MedicalApp.Controllers.Citas
 
             ViewBag.Clientes = db.Cliente.Where(a => a.Estado == Models.Enums.EstadoEnum.Activo).ToList();
             ViewBag.AreaEspecialidades = db.AreaEspecialidad.Where(a => a.Estado == Models.Enums.EstadoEnum.Activo).Include(a => a._AreaGeneral).ToList();
-            this.AddNotification("Favor completar todos los campos", NotificationType.ERROR);
             return View();
         }
 

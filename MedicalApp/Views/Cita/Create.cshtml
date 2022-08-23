@@ -12,80 +12,86 @@
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            <div class="form-group">
-                <label class="control-label col-xs-2 col-sm-2 col-xs-2 col-sm-2 col-md-2"> Cliente</label>
-                <div class="col-xs-8 col-sm-8 col-xs-8 col-sm-8 col-md-8">
-                    <input class="form-control text-box single-line" id="Cliente" name="Cliente" type="text" value="@ViewBag.Cliente" readonly required>
-                    <input class="form-control text-box single-line" id="ClienteId" name="ClienteId" type="hidden" value="@ViewBag.ClienteId">
-                </div>
-                <div class="col-xs-1 col-sm-1 col-md-1">
-                    <button type="button" class="btn btn-info btn-sm" title="Buscar Cliente" style="height:45px" data-toggle="modal" data-target="#modalSearchCustomer">
-                        <span class="fa fa-search">&nbsp;</span>
-                    </button>
-                </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2 col-sm-2 col-xs-2 col-sm-2 col-md-2"> Paciente</label>
+            <div class="col-xs-8 col-sm-8 col-xs-8 col-sm-8 col-md-8">
+                <input class="form-control text-box single-line" id="Cliente" name="Cliente" type="text" value="@ViewBag.Cliente" readonly required>
+                <input class="form-control text-box single-line" id="ClienteId" name="ClienteId" type="hidden" value="@ViewBag.ClienteId">
             </div>
-
-            <div class="form-group">
-                <label class="control-label col-xs-2 col-sm-2 col-md-2"> Área de Especialidad</label>
-                <div class="col-xs-8 col-sm-8 col-md-8">
-                    <input class="form-control text-box single-line" id="AreaEspecialidad" name="AreaEspecialidad" type="text" value="@ViewBag.AreaEspecialidad" readonly required>
-                    <input class="form-control text-box single-line" id="AreaEspecialidadId" name="AreaEspecialidadId" type="hidden" value="@ViewBag.AreaEspecialidadId">
-                </div>
-                <div class="col-xs-1 col-sm-1 col-md-1">
-                    <button type="button" class="btn btn-info btn-sm" title="Buscar Área de Especialidad" style="height:45px" data-toggle="modal" data-target="#modalSearchAreaEspecialidad">
-                        <span class="fa fa-search">&nbsp;</span>
-                    </button>
-                </div>
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                <button type="button" class="btn btn-info btn-sm" title="Buscar Cliente" style="height:45px" data-toggle="modal" data-target="#modalSearchCustomer">
+                    <span class="fa fa-search">&nbsp;</span>
+                </button>
             </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-2">Médico</label>
-                <div class="col-md-8">
-                    <select id="DoctorId" name="DoctorId" class="form-control" required></select>
-                    @Html.ValidationMessageFor(model => model.UsuarioId, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-xs-2 col-sm-2 col-md-2"> Tipo de Cita</label>
-                <div class="col-md-8">
-                    @Html.EnumDropDownListFor(model => model.TipoCita, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.TipoCita, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-xs-2 col-sm-2 col-md-2">Fecha</label>
-                <div class="col-xs-8 col-sm-4 col-md-2">
-                    <input class="form-control text-box single-line" id="FechaId" name="FechaCita" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.AddMonths(3).ToString("yyyy-MM-dd")" step="1" value="@ViewBag.Fecha">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-xs-2 col-sm-2 col-md-2">Hora</label>
-                <div class="col-xs-8 col-sm-4 col-md-2">
-                    <select id="HoraId" name="Hora" class="form-control text-box single-line" value="@ViewBag.Hora"></select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-xs-2 col-sm-2 col-md-2">Comentario</label>
-                <div class="col-xs-8 col-sm-8 col-md-8">
-                    <input class="form-control text-box single-line" id="Comentario" name="Comentario" type="text" value="@ViewBag.Comentario" required>
-                </div>
-            </div>
-
-            <div class="container">
-                <div class="row">
-                    <div class="col text-center">
-
-                        <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "Cita") '" />
-                        <input type="submit" value="Guardar" class="btn btn-info" onclick="return confirm('¿Seguro que desea guardar la Cita?')" />
-                    </div>
-                </div>
-            </div><br />
         </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-2 col-sm-2 col-md-2"> Área de Especialidad</label>
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <input class="form-control text-box single-line" id="AreaEspecialidad" name="AreaEspecialidad" type="text" value="@ViewBag.AreaEspecialidad" readonly required>
+                <input class="form-control text-box single-line" id="AreaEspecialidadId" name="AreaEspecialidadId" type="hidden" value="@ViewBag.AreaEspecialidadId">
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1">
+                <button type="button" class="btn btn-info btn-sm" title="Buscar Área de Especialidad" style="height:45px" data-toggle="modal" data-target="#modalSearchAreaEspecialidad">
+                    <span class="fa fa-search">&nbsp;</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Médico</label>
+            <div class="col-md-8">
+                <select id="DoctorId" name="DoctorId" class="form-control" required></select>
+                @Html.ValidationMessageFor(model => model.UsuarioId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            <label class="control-label col-xs-2 col-sm-2 col-md-2"> Tipo de Cita</label>
+            <div class="col-md-8">
+                @Html.EnumDropDownListFor(model => model.TipoCita, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TipoCita, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Fecha</label>
+            <div class="col-md-3">
+                <input class="form-control text-box single-line" id="FechaId" name="FechaCita" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.AddMonths(3).ToString("yyyy-MM-dd")" step="1" value="@ViewBag.Fecha">
+                @Html.ValidationMessageFor(model => model.UsuarioId, "", new { @class = "text-danger" })
+            </div>
+
+            <label class="control-label col-md-2">Hora</label>
+            <div class="col-md-3">
+                <select id="HoraId" name="Hora" class="form-control text-box single-line" value="@ViewBag.Hora"></select>
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-xs-2 col-sm-2 col-md-2">Comentario</label>
+            <div class="col-xs-8 col-sm-8 col-md-8">
+                <input class="form-control text-box single-line" id="Comentario" name="Comentario" type="text" value="@ViewBag.Comentario" required>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+
+                    <input type="button" value="Volver Atrás" class="btn btn-warning" onclick="location.href='@Url.Action("Index", "Cita") '" />
+                    <input type="submit" value="Guardar" class="btn btn-info" onclick="return confirm('¿Seguro que desea guardar la Cita?')" />
+                </div>
+            </div>
+        </div><br />
+    </div>
     }
 </div>
 

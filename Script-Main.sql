@@ -4401,7 +4401,7 @@ SET IDENTITY_INSERT dbo.Permiso ON;
 			( 5, 'Transacciones', GETDATE(),GETDATE(), 1, 0),
 			( 6, 'Habitaciones', GETDATE(),GETDATE(), 1, 0),
 			( 7, 'Citas', GETDATE(),GETDATE(), 1, 0),
-			( 8, 'Perfil', GETDATE(),GETDATE(), 1, 0)
+			( 8, 'Perfil', GETDATE(),GETDATE(), 1, 0),
 			( 9, 'Internamiento', GETDATE(),GETDATE(), 1, 0);
 SET IDENTITY_INSERT dbo.Permiso OFF; 
 END

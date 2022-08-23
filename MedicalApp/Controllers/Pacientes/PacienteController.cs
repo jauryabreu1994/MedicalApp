@@ -55,16 +55,16 @@ namespace MedicalApp.Controllers.Pacientes
                             return UserDashBoard();
                         }
                         else
-                            this.AddNotification("Contraseña incorrecta", NotificationType.ERROR);
+                            ViewBag.Error = "Contraseña incorrecta";
 
                     }
                     else
-                        this.AddNotification("Usuario o Correo incorrecto", NotificationType.ERROR);
+                        ViewBag.Error = "Usuario o Correo incorrecto";
                 }
             }
             catch
             {
-                this.AddNotification("Usuario y/o Contraseña incorrecto", NotificationType.ERROR);
+                ViewBag.Error = "Usuario y/o Contraseña incorrecto";
             }
 
             ViewBag.cliente = cliente;
@@ -86,13 +86,17 @@ namespace MedicalApp.Controllers.Pacientes
                 !string.IsNullOrEmpty(genero) && !string.IsNullOrEmpty(correo) && !string.IsNullOrEmpty(telefono) &&
                 !string.IsNullOrEmpty(contrasena) && !string.IsNullOrEmpty(rcontrasena))
             {
-                if (contrasena != rcontrasena)
-                    this.AddNotification("Contraseña no coinciden", NotificationType.ERROR);
+                identificacion = new GenericController().SetFormatVatNumber(identificacion);
+                if (new GenericController().IdentificationExist(identificacion, false))
+                    ViewBag.Error = "Existe un paciente con esta cedula";
+                else if (contrasena != rcontrasena)
+                    ViewBag.Error = "Contraseña no coinciden";
                 else
                 {
-                    Cliente cliente = new Cliente() {
+                    Cliente cliente = new Cliente()
+                    {
                         ClienteId = new EmpresaController().GenerateNumber(true, CompanyEnum.Cliente).Item1,
-                        Identificacion = new GenericController().SetFormatVatNumber(identificacion),
+                        Identificacion = identificacion,
                         Nombre = nombre,
                         Apellido = apellido,
                         Genero = (GeneroEnum)Convert.ToInt32(genero),
@@ -100,11 +104,12 @@ namespace MedicalApp.Controllers.Pacientes
                         Direccion = "",
                         CiudadId = 979,
                         PaisId = 1,
-                        Telefono = telefono,
+                        Telefono = new GenericController().SetFormatPhoneNumer(telefono),
                         Estado = EstadoEnum.Activo,
                         Eliminado = false,
                         FechaCreacion = DateTime.Now,
                         FechaModificacion = DateTime.Now,
+                        FechaNacimiento = DateTime.Now.Date,
                         Id = 0,
                         NombreFiscal = string.Format("{0} {1}", nombre, apellido)
                     };
@@ -130,7 +135,7 @@ namespace MedicalApp.Controllers.Pacientes
                 }
             }
             else
-                this.AddNotification("Completar todos los campos", NotificationType.ERROR);
+                ViewBag.Error = "Completar todos los campos";
 
             ViewBag.nombre = nombre;
             ViewBag.apellido = apellido;
@@ -310,7 +315,15 @@ namespace MedicalApp.Controllers.Pacientes
                 Estado = Models.Enums.EstadoCitaEnum.Pendiente,
                 Eliminado = false
             };
-            if (!string.IsNullOrEmpty(Comentario) && DateTime.Now <= cita.FechaCita)
+
+            var citas = db.Cita.Where(a => !a.Eliminado && a.ClienteId == ClienteId && a.AreaEspecialidadId == AreaEspecialidadId && a.FechaCita > DateTime.Now).Include(a => a._Usuario).ToList();
+            if (citas.Count() > 0)
+            {
+                var c = citas.FirstOrDefault();
+                string notificacion = string.Format("Posees una cita para esta especialidad. Doctor/a: {0} {1}, en Fecha {2}", c._Usuario.Nombre, c._Usuario.Apellido, c.FechaCita);
+                this.AddNotification(notificacion, NotificationType.ERROR);
+            }
+            else if (!string.IsNullOrEmpty(Comentario) && DateTime.Now <= cita.FechaCita)
             {
                 if (ModelState.IsValid)
                 {
@@ -480,7 +493,7 @@ namespace MedicalApp.Controllers.Pacientes
 
             ViewBag.Id = ClienteId;
             ViewBag.File = report;
-            return View(await clienteHistorial.ToListAsync());
+            return View(await clienteHistorial.OrderBy(a => a.FechaCreacion).ToListAsync());
         }
 
         public ActionResult Salir()
@@ -686,13 +699,13 @@ namespace MedicalApp.Controllers.Pacientes
             {
                 cliente.Nombre = Nombre;
                 cliente.Apellido = Apellido;
-                cliente.Identificacion = Identificacion;
+                //cliente.Identificacion = Identificacion;
                 cliente.NombreFiscal = NombreFiscal;
                 cliente.PaisId = PaisId;
                 cliente.CiudadId = CiudadId;
                 cliente.Direccion = Direccion;
                 cliente.Correo = Correo;
-                cliente.Telefono = Telefono;
+                cliente.Telefono = new GenericController().SetFormatPhoneNumer(Telefono);
                 cliente.Genero = (GeneroEnum)Genero;
                 cliente.FechaModificacion = DateTime.Now;
                 cliente.FechaNacimiento = FechaNacimiento;

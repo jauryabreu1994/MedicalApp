@@ -59,8 +59,8 @@ namespace MedicalApp.Controllers.Empresa
                 return RedirectToAction("Index", "Empresa");
             }
 
-            ViewBag.CiudadId = new SelectList(db.Ciudad, "Id", "Descripcion");
-            ViewBag.PaisId = new SelectList(db.Pais, "Id", "CodigoArea");
+
+            ViewBag.PaisId = new SelectList(db.Pais, "Id", "Descripcion");
             return View();
         }
 
@@ -79,8 +79,9 @@ namespace MedicalApp.Controllers.Empresa
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CiudadId = new SelectList(db.Ciudad, "Id", "Descripcion", empresa.CiudadId);
-            ViewBag.PaisId = new SelectList(db.Pais, "Id", "CodigoArea", empresa.PaisId);
+
+            ViewBag.CiudadId = empresa.CiudadId;
+            ViewBag.PaisId = new SelectList(db.Pais, "Id", "Descripcion", empresa.PaisId);
             this.AddNotification("Favor completar todos los campos", NotificationType.ERROR);
             return View(empresa);
         }
@@ -105,8 +106,8 @@ namespace MedicalApp.Controllers.Empresa
             {
                 return HttpNotFound();
             }
-            ViewBag.CiudadId = new SelectList(db.Ciudad, "Id", "Descripcion", empresa.CiudadId);
-            ViewBag.PaisId = new SelectList(db.Pais, "Id", "CodigoArea", empresa.PaisId);
+            ViewBag.CiudadId = empresa.CiudadId;
+            ViewBag.PaisId = new SelectList(db.Pais, "Id", "Descripcion", empresa.PaisId);
             return View(empresa);
         }
 
@@ -122,10 +123,11 @@ namespace MedicalApp.Controllers.Empresa
                 db.Entry(empresa).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 this.AddNotification("Empresa modificada exitosamente.", NotificationType.SUCCESS);
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit");
             }
-            ViewBag.CiudadId = new SelectList(db.Ciudad, "Id", "Descripcion", empresa.CiudadId);
-            ViewBag.PaisId = new SelectList(db.Pais, "Id", "CodigoArea", empresa.PaisId); 
+
+            ViewBag.CiudadId = empresa.CiudadId;
+            ViewBag.PaisId = new SelectList(db.Pais, "Id", "Descripcion", empresa.PaisId); 
             this.AddNotification("Favor completar todos los campos", NotificationType.ERROR);
             return View(empresa);
         }

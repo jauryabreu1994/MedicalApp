@@ -25,7 +25,7 @@ namespace MedicalApp.Controllers.MediosDePago
                 this.AddNotification("No posees permisos para el Listado de Pagos.", NotificationType.WARNING);
                 return RedirectToAction("Index", "DashBoard");
             }
-            var pago = db.Pago.Include(p => p._Empresa);
+            var pago = db.Pago.OrderBy(a => a.Descripcion).Include(p => p._Empresa);
             return View(await pago.ToListAsync());
         }
 

@@ -27,7 +27,7 @@ namespace MedicalApp.Controllers.Usuarios
             }
             var usuario = db.Usuario.Include(u => u._AreaEspecialidad).Include(u => u._Ciudad).Include(u => u._Empresa).Include(u => u._GrupoUsuario).Include(u => u._Pais);
             ViewBag.ListGroup = db.GrupoUsuario.ToList();
-            return View(usuario.ToList());
+            return View(usuario.OrderBy(a => a.Nombre).ToList());
         }
 
         public ActionResult Filter(int groupId = 1)
@@ -63,6 +63,15 @@ namespace MedicalApp.Controllers.Usuarios
             return Json(listado, JsonRequestBehavior.AllowGet);
         }
 
+        private List<AreaEspecialidad> GetAreaEspecialidades() 
+        {
+            var especialidades = db.AreaEspecialidad.Where(a=>!a.Eliminado).Include(a => a._AreaGeneral).ToList();
+            foreach (var especialidad in especialidades)
+                especialidad.Descripcion = string.Format("{0} - {1}", especialidad._AreaGeneral.Descripcion, especialidad.Descripcion);
+
+            return especialidades;
+        }
+
         // GET: Usuario/Create
         public ActionResult Create()
         {
@@ -71,7 +80,8 @@ namespace MedicalApp.Controllers.Usuarios
                 this.AddNotification("No posees permisos para Crear Usuarios.", NotificationType.WARNING);
                 return RedirectToAction("Index", "Usuario");
             }
-            ViewBag.AreaEspecialidadId = new SelectList(db.AreaEspecialidad, "Id", "Descripcion");
+
+            ViewBag.AreaEspecialidadId = new SelectList(GetAreaEspecialidades(), "Id", "Descripcion");
             ViewBag.CiudadId = new SelectList(db.Ciudad, "Id", "Descripcion");
             ViewBag.EmpresaId = new SelectList(db.Empresa, "Id", "Nombre");
             ViewBag.GrupoUsuarioId = new SelectList(db.GrupoUsuario, "Id", "Descripcion");
@@ -86,9 +96,9 @@ namespace MedicalApp.Controllers.Usuarios
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,EmpresaId,GrupoUsuarioId,AreaEspecialidadId,UsuarioId,Nombre,Apellido,Identificacion,PaisId,CiudadId,Direccion,Correo,Telefono,Genero,FechaCreacion,FechaModificacion,Estado,Eliminado")] Usuario usuario)
         {
-            if (new GenericController().IdentificationExist(usuario.Identificacion, false))
+            if (new GenericController().IdentificationExist(usuario.Identificacion))
             {
-                ViewBag.AreaEspecialidadId = new SelectList(db.AreaEspecialidad, "Id", "Descripcion", usuario.AreaEspecialidadId);
+                ViewBag.AreaEspecialidadId = new SelectList(GetAreaEspecialidades(), "Id", "Descripcion", usuario.AreaEspecialidadId);
                 ViewBag.CiudadId = new SelectList(db.Ciudad, "Id", "Descripcion", usuario.CiudadId);
                 ViewBag.EmpresaId = new SelectList(db.Empresa, "Id", "Nombre", usuario.EmpresaId);
                 ViewBag.GrupoUsuarioId = new SelectList(db.GrupoUsuario, "Id", "Descripcion", usuario.GrupoUsuarioId);
@@ -105,7 +115,10 @@ namespace MedicalApp.Controllers.Usuarios
                     
                     usuario.UsuarioId = new EmpresaController().GenerateNumber(true, companyEnum).Item1; 
                 }
-                
+
+                usuario.Identificacion = new GenericController().SetFormatVatNumber(usuario.Identificacion);
+                usuario.Telefono = new GenericController().SetFormatPhoneNumer(usuario.Telefono);
+
                 usuario.FechaModificacion = DateTime.Now;
                 usuario.FechaCreacion = DateTime.Now;
                 db.Usuario.Add(usuario);
@@ -132,7 +145,7 @@ namespace MedicalApp.Controllers.Usuarios
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AreaEspecialidadId = new SelectList(db.AreaEspecialidad, "Id", "Descripcion", usuario.AreaEspecialidadId);
+            ViewBag.AreaEspecialidadId = new SelectList(GetAreaEspecialidades(), "Id", "Descripcion", usuario.AreaEspecialidadId);
             ViewBag.CiudadId = new SelectList(db.Ciudad, "Id", "Descripcion", usuario.CiudadId);
             ViewBag.EmpresaId = new SelectList(db.Empresa, "Id", "Nombre", usuario.EmpresaId);
             ViewBag.GrupoUsuarioId = new SelectList(db.GrupoUsuario, "Id", "Descripcion", usuario.GrupoUsuarioId);
@@ -158,7 +171,7 @@ namespace MedicalApp.Controllers.Usuarios
             {
                 return HttpNotFound();
             }
-            ViewBag.AreaEspecialidadId = new SelectList(db.AreaEspecialidad, "Id", "Descripcion", usuario.AreaEspecialidadId);
+            ViewBag.AreaEspecialidadId = new SelectList(GetAreaEspecialidades(), "Id", "Descripcion", usuario.AreaEspecialidadId);
             ViewBag.CiudadId = new SelectList(db.Ciudad, "Id", "Descripcion", usuario.CiudadId);
             ViewBag.EmpresaId = new SelectList(db.Empresa, "Id", "Nombre", usuario.EmpresaId);
             ViewBag.GrupoUsuarioId = new SelectList(db.GrupoUsuario, "Id", "Descripcion", usuario.GrupoUsuarioId);
@@ -175,13 +188,15 @@ namespace MedicalApp.Controllers.Usuarios
         {
             if (ModelState.IsValid)
             {
+                usuario.Identificacion = new GenericController().SetFormatVatNumber(usuario.Identificacion);
+                usuario.Telefono = new GenericController().SetFormatPhoneNumer(usuario.Telefono);
                 usuario.FechaModificacion = DateTime.Now;
                 db.Entry(usuario).State = EntityState.Modified;
                 db.SaveChanges();
                 this.AddNotification("Usuario modificado exitosamente", NotificationType.SUCCESS);
                 return RedirectToAction("Index");
             }
-            ViewBag.AreaEspecialidadId = new SelectList(db.AreaEspecialidad, "Id", "Descripcion", usuario.AreaEspecialidadId);
+            ViewBag.AreaEspecialidadId = new SelectList(GetAreaEspecialidades(), "Id", "Descripcion", usuario.AreaEspecialidadId);
             ViewBag.CiudadId = new SelectList(db.Ciudad, "Id", "Descripcion", usuario.CiudadId);
             ViewBag.EmpresaId = new SelectList(db.Empresa, "Id", "Nombre", usuario.EmpresaId);
             ViewBag.GrupoUsuarioId = new SelectList(db.GrupoUsuario, "Id", "Descripcion", usuario.GrupoUsuarioId);

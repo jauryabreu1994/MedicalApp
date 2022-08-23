@@ -27,7 +27,7 @@ namespace MedicalApp.Controllers.Productos
                 return RedirectToAction("Index", "DashBoard");
             }
             var producto = db.Producto.Include(p => p._Empresa).Include(p => p._Impuesto);
-            return View(await producto.ToListAsync());
+            return View(await producto.OrderBy(a => a.Descripcion).ToListAsync());
         }
 
         // GET: Producto/Create

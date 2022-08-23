@@ -24,7 +24,7 @@ namespace MedicalApp.Controllers.Servicios
                 return RedirectToAction("Index", "DashBoard");
             }
             var servicio = db.Servicio.Include(s => s._Empresa).Include(s => s._Impuesto).Include(s => s._Usuario);
-            return View(await servicio.ToListAsync());
+            return View(await servicio.OrderBy(a => a.Descripcion).ToListAsync());
         }
 
         // GET: Servicio/Create

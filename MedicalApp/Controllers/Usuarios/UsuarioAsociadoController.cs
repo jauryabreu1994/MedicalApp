@@ -29,7 +29,7 @@ namespace MedicalApp.Controllers.Usuarios
             {
                 ViewBag.UsuarioId = id;
                 var usuarioAsociado = db.UsuarioAsociado.Include(u => u._Asistente).Include(u => u._Doctor).Where(a=>a.DoctorId == id && a.Estado == Models.Enums.EstadoEnum.Activo);
-                return View(await usuarioAsociado.ToListAsync());
+                return View(await usuarioAsociado.OrderBy(a => a.AsistenteId).ToListAsync());
             }
             return RedirectToAction("Index");
         }

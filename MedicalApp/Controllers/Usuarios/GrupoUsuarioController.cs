@@ -26,7 +26,7 @@ namespace MedicalApp.Controllers.Usuarios
                 return RedirectToAction("Index", "DashBoard");
             }
             var grupoUsuario = db.GrupoUsuario.Include(g => g._Empresa);
-            return View(await grupoUsuario.ToListAsync());
+            return View(await grupoUsuario.OrderBy(a => a.Descripcion).ToListAsync());
         }
 
         // GET: GrupoUsuario/Create

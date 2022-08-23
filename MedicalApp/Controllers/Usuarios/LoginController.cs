@@ -23,13 +23,13 @@ namespace MedicalApp.Controllers.Usuarios
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Index(int empresaId, string usuario, string contrasena)
+        public async Task<ActionResult> Index(int? empresaId, string usuario, string contrasena)
         {
             try
             {
                 if (empresaId == 0)
                 {
-                    this.AddNotification("Debe seleccionar una empresa", NotificationType.ERROR);
+                    ViewBag.CompanyError = "Debe seleccionar una empresa";
                 }
                 else if (!string.IsNullOrEmpty(usuario) && !string.IsNullOrEmpty(contrasena))
                 {
@@ -40,8 +40,8 @@ namespace MedicalApp.Controllers.Usuarios
                         var _contrasena = await db.UsuarioContrasena.FirstAsync(a => a.UsuarioId == _usuario.Id && a.Estado == Models.Enums.EstadoEnum.Activo);
                         if (encriptar_DesEncriptar.DesEncriptar(_contrasena.Contraseña) == contrasena)
                         {
-                            
-                            
+
+
                             Session.Add("UserID", encriptar_DesEncriptar.Encriptar(_usuario.Id.ToString()));
                             Session["UserName"] = (!string.IsNullOrEmpty(_usuario.Apellido)) ? string.Format("{0} {1}", _usuario.Nombre.Split(' ')[0], _usuario.Apellido.Split(' ')[0]) : _usuario.Nombre;
                             Session["GrupoUsuarioId"] = encriptar_DesEncriptar.Encriptar(_usuario.GrupoUsuarioId.ToString());
@@ -60,17 +60,17 @@ namespace MedicalApp.Controllers.Usuarios
                             return UserDashBoard();
                         }
                         else
-                            this.AddNotification("Contraseña incorrecta", NotificationType.ERROR);
+                            ViewBag.PasswordError = "Contraseña incorrecta";
 
                     }
                     else
-                        this.AddNotification("Usuario o Correo incorrecto", NotificationType.ERROR);
+                        ViewBag.UserError = "Usuario o Correo incorrecto";
                 }
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                this.AddNotification("Usuario y/o Contraseña incorrecto", NotificationType.ERROR);
+                ViewBag.UserError = (ex.Message == "Sequence contains no elements") ? "Usuario o Correo incorrecto" : "";
+                ViewBag.GeneralError = (string.IsNullOrEmpty(ViewBag.UserError)) ? "Usuario y/o Contraseña incorrecto" : "";
             }
 
             ViewBag.usuario = usuario;
@@ -97,7 +97,7 @@ namespace MedicalApp.Controllers.Usuarios
             }
             else
             {
-                this.AddNotification("Usuario y/o Contraseña incorrecto", NotificationType.ERROR);
+                ViewBag.GeneralError = "Usuario y/o Contraseña incorrecto";
                 return View();
             }
         }

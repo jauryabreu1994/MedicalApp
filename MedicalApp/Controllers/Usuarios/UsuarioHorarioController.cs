@@ -35,7 +35,8 @@ namespace MedicalApp.Controllers.Usuarios
 
             var usuarioHorario = db.UsuarioHorario.Where(a=> a.UsuarioId == UsuarioId).Include(u => u._Doctor).Include(u => u._Horario);
             ViewBag.UsuarioId = UsuarioId;
-            return View(await usuarioHorario.ToListAsync());
+            ViewBag.Nombre = string.Format("{0} {1}", usuario.Nombre, usuario.Apellido);
+            return View(await usuarioHorario.OrderBy(a => a.Dia).ThenBy(a => a._Horario.Hora).ThenBy(a => a._Horario.Minutos).ToListAsync());
         }
 
 

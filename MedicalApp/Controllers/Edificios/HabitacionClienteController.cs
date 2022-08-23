@@ -28,7 +28,7 @@ namespace MedicalApp.Controllers.Edificios
             var habitacionCliente = db.HabitacionCliente.Include(h => h._Cliente).Include(h => h._Habitacion)
                                                         .Include(h => h._Doctor).Include(h => h._Cajero)
                                                         .Include(h => h._Enfermera);
-            return View(await habitacionCliente.ToListAsync());
+            return View(await habitacionCliente.OrderBy(a => a.FechaCreacion).ToListAsync());
         }
 
         // GET: HabitacionCliente/Create

@@ -6,73 +6,77 @@
 }
 
 <div class="panel panel-container ">
-    <button type="button" class="btn btn-primary btn-sm" title="Agregar Nuevo Paciente" 
+    <button type="button" class="btn btn-primary btn-sm" title="Agregar Nuevo Paciente"
             style="float: right; margin-top: -15px; margin-right: 5px; padding: 5px 15px 5px 10px;"
             onclick="location.href='@Url.Action("Create", "Cliente")'">
         <span class="fa fa-plus">&nbsp;</span> Agregar Nuevo Paciente
     </button>
-    <hr/>
+    <hr />
+
     <table class="table-responsive table-hover table-striped display" width="100%" cellspacing="1">
-        <thead>
-            <tr>
-                <th>
-                    Código
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Nombre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Apellido)
-                </th>
-                <th>
-                    Cedula o RNC
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Correo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Telefono)
-                </th>
-                <th>
-                   Estado
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Count() > 0)
-            {
-                foreach (var term in Model)
+            <thead>
+                <tr>
+                    <th>
+                        Código
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Apellido)
+                    </th>
+                    <th>
+                        Cedula o RNC
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Correo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Telefono)
+                    </th>
+                    <th>
+                        Edad
+                    </th>
+                    <th>
+                        Estado
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() > 0)
                 {
-                    <tr style="@(term.Eliminado == true ? "background-color:#FAE6E9" : "")">
-                        <td>@Html.DisplayFor(modelItem => term.ClienteId)</td>
-                        <td>@Html.DisplayFor(modelItem => term.Nombre)</td>
-                        <td>@Html.DisplayFor(modelItem => term.Apellido)</td>
-                        <td>@Html.DisplayFor(modelItem => term.Identificacion)</td>
-                        <td>@Html.DisplayFor(modelItem => term.Correo)</td>
-                        <td>@Html.DisplayFor(modelItem => term.Telefono)</td>
-                        <td>@string.Format("{0} años", Convert.ToInt32(DateTime.Today.AddTicks(-term.FechaNacimiento.Ticks).Year - 1).ToString("###"))</td>
-                        <td>@Html.DisplayFor(modelItem => term.Estado)</td>
-                        <td align="right">
-                            @if (!term.Eliminado)
-                            {
-                                <button type="button" class="btn btn-info btn-sm" title="Modificar" onclick="location.href='@Url.Action("Edit", "Cliente", new { id = term.Id }) '">
-                                    <span class="fa fa-pencil">&nbsp;</span>
-                                </button>
-                                <button type="button" class="btn btn-warning btn-sm" title="Reiniciar Contraseña" onclick="if(confirm('¿Seguro que desea colocar la contraseña por defecto?')) location.href='@Url.Action("ResetPassword", "ClienteContrasena", new { id = term.Id }) '">
-                                    <span class="fa fa-lock">&nbsp;</span>
-                                </button>
-                                <button type="button" class="btn btn- btn-sm" title="Documentacion" onclick=" location.href='@Url.Action("Index", "ClienteHistorial", new { id = term.Id }) '">
-                                    <span class="fa fa-file">&nbsp;</span>
-                                </button>
-                                <button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick="location.href='@Url.Action("Delete", "Cliente", new { id = term.Id }) '">
-                                    <span class="fa fa-eraser">&nbsp;</span>
-                                </button>
-                            }
-                        </td>
-                    </tr>
+                    foreach (var term in Model)
+                    {
+                        <tr style="@(term.Eliminado == true ? "background-color:#FAE6E9" : "")">
+                            <td>@Html.DisplayFor(modelItem => term.ClienteId)</td>
+                            <td>@Html.DisplayFor(modelItem => term.Nombre)</td>
+                            <td>@Html.DisplayFor(modelItem => term.Apellido)</td>
+                            <td>@Html.DisplayFor(modelItem => term.Identificacion)</td>
+                            <td>@Html.DisplayFor(modelItem => term.Correo)</td>
+                            <td>@Html.DisplayFor(modelItem => term.Telefono)</td>
+                            <td>@string.Format("{0} años", Convert.ToInt32(DateTime.Today.AddTicks(-term.FechaNacimiento.Ticks).Year - 1).ToString("###"))</td>
+                            <td>@Html.DisplayFor(modelItem => term.Estado)</td>
+                            <td align="right">
+                                @if (!term.Eliminado)
+                                {
+                                    <button type="button" class="btn btn-info btn-sm" title="Modificar" onclick="location.href='@Url.Action("Edit", "Cliente", new { id = term.Id }) '">
+                                        <span class="fa fa-pencil">&nbsp;</span>
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-sm" title="Reiniciar Contraseña" onclick="if(confirm('¿Seguro que desea colocar la contraseña por defecto?')) location.href='@Url.Action("ResetPassword", "ClienteContrasena", new { id = term.Id }) '">
+                                        <span class="fa fa-lock">&nbsp;</span>
+                                    </button>
+                                    <button type="button" class="btn btn- btn-sm" title="Documentacion" onclick=" location.href='@Url.Action("Index", "ClienteHistorial", new { id = term.Id }) '">
+                                        <span class="fa fa-file">&nbsp;</span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm" title="Eliminar" onclick="location.href='@Url.Action("Delete", "Cliente", new { id = term.Id }) '">
+                                        <span class="fa fa-eraser">&nbsp;</span>
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
                 }
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 </div>

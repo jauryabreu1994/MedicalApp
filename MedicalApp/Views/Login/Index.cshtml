@@ -24,7 +24,6 @@
     </style>
 </head>
 <body>
-    @Html.Partial("_Notifications")
     <section class="ftco-section">
         <div class="container">
             <div class="row justify-content-center">
@@ -47,19 +46,28 @@
 
                                 <div class="form-group mt-3">
                                     <select id="EmpresaId" name="EmpresaId" class="form-control"></select>
+                                    <span style="color:crimson">@ViewBag.CompanyError</span>
                                 </div>
                                 <div class="form-group mt-3">
-                                    <input type="text" class="form-control"  name="usuario" value="@ViewBag.usuario" autocomplete="off" required>
-                                    <label class="form-control-placeholder"  for="username">Usuario o Correo</label>
+                                    <input type="text" class="form-control" name="usuario" value="@ViewBag.usuario" autocomplete="off" required>
+                                    <label class="form-control-placeholder" for="username">Usuario o Correo</label>
+                                    <span style="color:crimson">@ViewBag.UserError</span>
                                 </div>
+
                                 <div class="form-group">
-                                    <input id="password-field" type="password"  name="contrasena" class="form-control"  autocomplete="off" value="@ViewBag.contrasena" required>
-                                    <label class="form-control-placeholder"  for="password">Contraseña</label>
+                                    <input id="password-field" type="password" name="contrasena" class="form-control" autocomplete="off" value="@ViewBag.contrasena" required>
+                                    <label class="form-control-placeholder" for="password">Contraseña</label>
                                     <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                    <span style="color:crimson">@ViewBag.PasswordError</span>
                                 </div>
+
+
                                 <div class="form-group">
+                                    <span style="color:crimson">@ViewBag.GeneralError</span>
                                     <button type="submit" class="form-control btn btn-primary rounded submit px-3">Iniciar</button>
                                 </div>
+
+                                <a class="small" style="margin:auto; text-align:center; display:block;" href="@Url.Action("Index", "Home")">Volver a la Pagina Principal</a>
                             }
                         </div>
                     </div>

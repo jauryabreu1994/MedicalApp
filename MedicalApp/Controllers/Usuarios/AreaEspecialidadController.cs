@@ -26,7 +26,7 @@ namespace MedicalApp.Controllers.Usuarios
                 return RedirectToAction("Index", "DashBoard");
             }
             var areaEspecialidad = db.AreaEspecialidad.Include(a => a._AreaGeneral);
-            return View(await areaEspecialidad.ToListAsync());
+            return View(await areaEspecialidad.OrderBy(a => a.Descripcion).ToListAsync());
         }
 
         // GET: AreaEspecialidad/Create

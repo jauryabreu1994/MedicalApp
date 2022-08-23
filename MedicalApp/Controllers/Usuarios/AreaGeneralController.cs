@@ -25,7 +25,7 @@ namespace MedicalApp.Controllers.Usuarios
                 this.AddNotification("No posees permisos para el Listado de Área General.", NotificationType.WARNING);
                 return RedirectToAction("Index", "DashBoard");
             }
-            return View(await db.AreaGeneral.ToListAsync());
+            return View(await db.AreaGeneral.OrderBy(a => a.Descripcion).ToListAsync());
         }
 
         // GET: AreaGeneral/Create
