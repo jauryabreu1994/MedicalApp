@@ -24,7 +24,6 @@
                 <label class="control-label col-xs-2 col-sm-2 col-xs-2 col-sm-2 col-md-2">Descripción</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -33,14 +32,12 @@
                 <label class="control-label col-md-2">Tipo de Pago</label>
                 <div class="col-md-9">
                     @Html.EnumDropDownListFor(model => model.TipoPago, htmlAttributes: new { @class = "form-control", autocomplete = "off"  })
-                    @Html.ValidationMessageFor(model => model.TipoPago, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-md-2">Tasa de Cambio</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.TasaCambio, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.TasaCambio, "", new { @class = "text-danger" })
                 </div>
             </div>
 

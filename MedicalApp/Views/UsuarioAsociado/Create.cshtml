@@ -24,7 +24,6 @@
                 <label class="control-label col-xs-2 col-sm-2 col-xs-2 col-sm-2 col-md-2"> Doctor</label>
                 <div class="col-md-9">
                     @Html.DropDownList("DoctorId", null, htmlAttributes: new { @class = "form-control", autocomplete = "off", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(model => model.DoctorId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -32,7 +31,6 @@
                 <label class="control-label col-xs-2 col-sm-2 col-xs-2 col-sm-2 col-md-2"> Asistente</label>
                 <div class="col-md-9">
                     @Html.DropDownList("AsistenteId", null, htmlAttributes: new { @class = "form-control", autocomplete = "off" })
-                    @Html.ValidationMessageFor(model => model.AsistenteId, "", new { @class = "text-danger" })
                 </div>
             </div>
 

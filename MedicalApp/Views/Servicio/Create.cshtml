@@ -25,7 +25,6 @@
             <label class="control-label col-xs-2 col-sm-2 col-xs-2 col-sm-2 col-md-2">Descripción</label>
             <div class="col-md-8">
                 @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -33,7 +32,6 @@
             <label class="control-label col-md-2">Descripción Extendida</label>
             <div class="col-md-8">
                 @Html.EditorFor(model => model.DescripcionExtendida, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                @Html.ValidationMessageFor(model => model.DescripcionExtendida, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -54,7 +52,6 @@
             <label class="control-label col-md-2">Precio</label>
             <div class="col-md-8">
                 @Html.EditorFor(model => model.Costo, new { htmlAttributes = new { @class = "form-control", autocomplete = "off"  } })
-                @Html.ValidationMessageFor(model => model.Costo, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -62,7 +59,6 @@
             <label class="control-label col-md-2">Impuesto</label>
             <div class="col-md-8">
                 @Html.DropDownList("ImpuestoId", null, htmlAttributes: new { @class = "form-control", autocomplete = "off"  })
-                @Html.ValidationMessageFor(model => model.ImpuestoId, "", new { @class = "text-danger" })
             </div>
         </div>
 

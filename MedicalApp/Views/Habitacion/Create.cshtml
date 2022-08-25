@@ -23,21 +23,18 @@
                 <label class="control-label col-md-2">Nivel de Edificio</label>
                 <div class="col-md-9">
                     @Html.DropDownList("EdificioNivelId", null, htmlAttributes: new { @class = "form-control", autocomplete = "off"  })
-                    @Html.ValidationMessageFor(model => model.EdificioNivelId, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-md-2">Código de Habitación</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.CodigoHabitacion, new { htmlAttributes = new { @class = "form-control", autocomplete = "off"  } })
-                    @Html.ValidationMessageFor(model => model.CodigoHabitacion, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-md-2">Maximo de Clientes</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.MaximoClientes, new { htmlAttributes = new { @class = "form-control", autocomplete = "off"  } })
-                    @Html.ValidationMessageFor(model => model.MaximoClientes, "", new { @class = "text-danger" })
                 </div>
             </div>
 

@@ -100,7 +100,7 @@ namespace MedicalApp.Controllers.Usuarios
         {
             if (!new GenericController().hasAccess(Models.Enums.PermisoEnum.Usuario, Session))
             {
-                this.AddNotification("No posees permisos para Eliminar Área General.", NotificationType.WARNING);
+                this.AddNotification("No posees permisos para eliminar Área General.", NotificationType.WARNING);
                 return RedirectToAction("Index", "AreaGeneral");
             }
             if (id == null)

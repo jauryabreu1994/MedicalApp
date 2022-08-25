@@ -60,14 +60,12 @@
                 <label class="control-label col-md-2">Cantidad</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-md-2">Comentario</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
                 </div>
             </div>
 

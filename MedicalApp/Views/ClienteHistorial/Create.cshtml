@@ -32,7 +32,6 @@
             <div class="col-md-9">
 
                 <textarea id="content" name="Indicaciones"></textarea>
-                @Html.ValidationMessageFor(model => model.Indicaciones, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -40,7 +39,6 @@
             @Html.LabelFor(model => model.Documentacion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <textarea id="content2" name="Documentacion"></textarea>
-                @Html.ValidationMessageFor(model => model.Documentacion, "", new { @class = "text-danger" })
             </div>
         </div>
 

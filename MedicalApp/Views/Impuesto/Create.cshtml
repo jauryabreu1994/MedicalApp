@@ -24,7 +24,6 @@
             <label class="control-label col-xs-2 col-sm-2 col-xs-2 col-sm-2 col-md-2">Descripción</label>
             <div class="col-md-9">
                 @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -32,7 +31,6 @@
             @Html.LabelFor(model => model.Prefijo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 @Html.EditorFor(model => model.Prefijo, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                @Html.ValidationMessageFor(model => model.Prefijo, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -40,7 +38,6 @@
             @Html.LabelFor(model => model.Monto, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 @Html.EditorFor(model => model.Monto, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                @Html.ValidationMessageFor(model => model.Monto, "", new { @class = "text-danger" })
             </div>
         </div>
 

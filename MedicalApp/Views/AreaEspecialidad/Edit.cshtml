@@ -23,7 +23,6 @@
             <label class="control-label col-xs-2 col-sm-2 col-xs-2 col-sm-2 col-md-2"> Cod. Área de Especialidad</label>
                 <div class="col-md-9">
                     @Html.DropDownList("AreaGeneralId", null, htmlAttributes: new { @class = "form-control", autocomplete = "off"  })
-                    @Html.ValidationMessageFor(model => model.AreaGeneralId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -31,7 +30,6 @@
                 <label class="control-label col-xs-2 col-sm-2 col-xs-2 col-sm-2 col-md-2">Descripción</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", autocomplete = "off"  } })
-                    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
                 </div>
             </div>
 

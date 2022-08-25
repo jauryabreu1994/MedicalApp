@@ -25,7 +25,7 @@ namespace MedicalApp.Controllers.Clientes
         {
             if (!new GenericController().hasAccess(Models.Enums.PermisoEnum.Clientes, Session))
             {
-                this.AddNotification("No posees permisos para el Listado de Clientes.", NotificationType.WARNING);
+                this.AddNotification("No posees permisos para el Listado de Pacientes.", NotificationType.WARNING);
                 return RedirectToAction("Index", "DashBoard");
             }
             var cliente = db.Cliente.Include(c => c._Ciudad).Include(c => c._Pais);

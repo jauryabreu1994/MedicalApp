@@ -33,7 +33,6 @@
                 <label class="control-label col-md-2">Nombre Comercial</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -41,7 +40,6 @@
                 <label class="control-label col-md-2">RNC</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -49,7 +47,6 @@
                 <label class="control-label col-md-2">Nombre Fiscal</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.NombreFiscal, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.NombreFiscal, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -57,7 +54,6 @@
                 <label class="control-label col-md-2">País</label>
                 <div class="col-md-9">
                     @Html.DropDownList("PaisId", null, htmlAttributes: new { @class = "form-control", autocomplete = "off" })
-                    @Html.ValidationMessageFor(model => model.PaisId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -65,7 +61,6 @@
                 <label class="control-label col-md-2">Ciudad</label>
                 <div class="col-md-9">
                     <select id="CiudadId" name="CiudadId" class="form-control"></select>
-                    @Html.ValidationMessageFor(model => model.CiudadId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -73,7 +68,6 @@
                 <label class="control-label col-md-2">Dirección</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -81,7 +75,6 @@
                 @Html.LabelFor(model => model.Correo, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -89,7 +82,6 @@
                 <label class="control-label col-md-2">Teléfono</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -97,7 +89,6 @@
                 @Html.LabelFor(model => model.Moneda, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Moneda, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.Moneda, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -105,7 +96,6 @@
                 <label class="control-label col-md-2">Licencia</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.CodiLicencia, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.CodiLicencia, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -113,7 +103,6 @@
                 <label class="control-label col-md-2">Correo SMTP</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.CorreoSMTP, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.CorreoSMTP, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -121,7 +110,6 @@
                 <label class="control-label col-md-2">Contrase&ntilde;a SMTP</label>
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.ContrasenaSMTP, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", type = "password"} })
-                    @Html.ValidationMessageFor(model => model.ContrasenaSMTP, "", new { @class = "text-danger" })
                 </div>
             </div>
 

@@ -59,12 +59,12 @@ namespace MedicalApp.Controllers.Pacientes
 
                     }
                     else
-                        ViewBag.Error = "Usuario o Correo incorrecto";
+                        ViewBag.Error = "Cedula o Correo incorrecto";
                 }
             }
             catch
             {
-                ViewBag.Error = "Usuario y/o Contraseña incorrecto";
+                ViewBag.Error = "Cedula y/o Contraseña incorrecto";
             }
 
             ViewBag.cliente = cliente;
@@ -156,7 +156,7 @@ namespace MedicalApp.Controllers.Pacientes
             }
             else
             {
-                this.AddNotification("Correo y/o Contraseña incorrecto", NotificationType.ERROR);
+                this.AddNotification("Cedula y/o Contraseña incorrecto", NotificationType.ERROR);
                 return View();
             }
         }

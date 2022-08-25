@@ -18,7 +18,7 @@ namespace MedicalApp.Controllers.Productos
         private MainDbContext db = new MainDbContext();
 
         // GET: ProductoCliente
-        public async Task<ActionResult> Index(int id)
+        public ActionResult Index(int id)
         {
             if (!new GenericController().hasAccess(Models.Enums.PermisoEnum.Internamiento, Session))
             {

@@ -21,7 +21,6 @@
             @Html.LabelFor(model => model.HabitacionClienteId, "HabitacionClienteId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("HabitacionClienteId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.HabitacionClienteId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -29,7 +28,6 @@
             @Html.LabelFor(model => model.ProductoId, "ProductoId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ProductoId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ProductoId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -37,7 +35,6 @@
             @Html.LabelFor(model => model.Cantidad, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -45,7 +42,6 @@
             @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -53,7 +49,6 @@
             @Html.LabelFor(model => model.FechaCreacion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FechaCreacion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaCreacion, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -61,7 +56,6 @@
             @Html.LabelFor(model => model.FechaModificacion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FechaModificacion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaModificacion, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -69,7 +63,6 @@
             @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EnumDropDownListFor(model => model.Estado, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -78,7 +71,6 @@
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.Eliminado)
-                    @Html.ValidationMessageFor(model => model.Eliminado, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

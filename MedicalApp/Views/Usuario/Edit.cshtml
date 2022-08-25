@@ -31,7 +31,6 @@
             @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", autocomplete = "off"  } })
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -39,7 +38,6 @@
             @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control", autocomplete = "off"  } })
-                @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -47,7 +45,6 @@
             <label class="control-label col-md-2">Cédula o RNC</label>
             <div class="col-md-9">
                 @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { @class = "form-control", autocomplete = "off"  } })
-                @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -55,7 +52,6 @@
             <label class="control-label col-md-2">País</label>
             <div class="col-md-9">
                 @Html.DropDownList("PaisId", null, htmlAttributes: new { @class = "form-control", autocomplete = "off"  })
-                @Html.ValidationMessageFor(model => model.PaisId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -63,7 +59,6 @@
             <label class="control-label col-md-2">Ciudad</label>
             <div class="col-md-9">
                 <select id="CiudadId" name="CiudadId" class="form-control"></select>
-                @Html.ValidationMessageFor(model => model.CiudadId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -71,7 +66,6 @@
             <label class="control-label col-md-2">Dirección</label>
             <div class="col-md-9">
                 @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control", autocomplete = "off"  } })
-                @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -80,7 +74,6 @@
             <label class="control-label col-md-2">Grupo de Usuario</label>
             <div class="col-md-9">
                 @Html.DropDownList("GrupoUsuarioId", null, htmlAttributes: new { @class = "form-control", autocomplete = "off"  })
-                @Html.ValidationMessageFor(model => model.GrupoUsuarioId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -88,7 +81,6 @@
             <label class="control-label col-md-2"> Área de Especialidad</label>
             <div class="col-md-9">
                 @Html.DropDownList("AreaEspecialidadId", null, htmlAttributes: new { @class = "form-control", autocomplete = "off"  })
-                @Html.ValidationMessageFor(model => model.AreaEspecialidadId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -96,7 +88,6 @@
             @Html.LabelFor(model => model.Correo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control", autocomplete = "off"  } })
-                @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -104,7 +95,6 @@
             <label class="control-label col-md-2">Teléfono</label>
             <div class="col-md-9">
                 @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", autocomplete = "off"  } })
-                @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -112,7 +102,6 @@
             @Html.LabelFor(model => model.Genero, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 @Html.EnumDropDownListFor(model => model.Genero, htmlAttributes: new { @class = "form-control", autocomplete = "off"  })
-                @Html.ValidationMessageFor(model => model.Genero, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -120,7 +109,6 @@
             @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 @Html.EnumDropDownListFor(model => model.Estado, htmlAttributes: new { @class = "form-control", autocomplete = "off"  })
-                @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
             </div>
         </div>
 

@@ -59,7 +59,6 @@
                     <div class="form-group row">
                         <div class="col-sm-11 mb-2 mb-sm-2">
                             <select id="DoctorId" name="DoctorId" class="form-control" required></select>
-                            @Html.ValidationMessageFor(model => model.UsuarioId, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
@@ -69,7 +68,6 @@
                     <div class="form-group row">
                         <div class="col-sm-11 mb-2 mb-sm-2">
                             @Html.EnumDropDownListFor(model => model.TipoCita, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.TipoCita, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
